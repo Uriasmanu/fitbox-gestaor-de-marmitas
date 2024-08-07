@@ -1,4 +1,4 @@
-import "/_sidebar.scss";
+import "./_sidebar.scss"
 import imagemUsuario from "../../Image/usuario.png"
 import texts from "../../Texts/text.json"
 import { FaUtensils, FaBox, FaShoppingCart, FaFileAlt, FaWarehouse } from 'react-icons/fa';
