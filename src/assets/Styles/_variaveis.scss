@@ -1,25 +1,33 @@
 
 $primary-color: #FFF8E2;
 $secondary-color: #000000;
-$font-family: 'Arial', sans-serif;
+$font-family: 'inria-sans', sans-serif;
 
 *{
     margin: 0;
     padding: 0;
+    font-family: $font-family;
+
 }
 
 h1{
     font-size: 54px;
+
 }
 
 h2{
     font-size: 42px;
+
 }
 p{
     font-size: 24px;
+
 }
 
-
+li{
+    list-style: none;
+    font-size: 24px;
+}
 
 
 
@@ -33,6 +41,9 @@ p{
     p{
         font-size: 18px;
     }
-
+    li{
+        list-style: none;
+        font-size: 20px;
+    }
 
 }
