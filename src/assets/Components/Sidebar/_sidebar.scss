@@ -1,0 +1,9 @@
+@import "../../styles/variaveis"; 
+
+.ContainerSidebar {
+    display: flex;
+    flex-direction: column;
+    background: $primary-color;
+    height: 100vh;
+    width: 30%;
+}

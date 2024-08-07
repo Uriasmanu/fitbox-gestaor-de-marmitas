@@ -1,6 +1,9 @@
+import Sidebar from "../../Components/Sidebar";
+
 const Home = () =>{
     return(
         <>
+        <Sidebar/>
         </>
     )
 }
