@@ -1,5 +1,6 @@
 import BotaoVoltar from '../../Components/BotaoVoltar/BotaoVoltar';
 import './_notFound.scss'
+import "../../Styles/styleBase"; 
 
 const NotFound = () => {
     return (

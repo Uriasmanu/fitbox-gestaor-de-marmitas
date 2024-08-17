@@ -2,6 +2,7 @@ import "./_sidebar.scss"
 import imagemUsuario from "../../Image/usuario.png"
 import texts from "../../Texts/text.json"
 import { FaUtensils, FaBox, FaShoppingCart, FaFileAlt, FaWarehouse } from 'react-icons/fa';
+import "../../Styles/styleBase"; 
 
 const Sidebar = () => {
     const iconMap = {
