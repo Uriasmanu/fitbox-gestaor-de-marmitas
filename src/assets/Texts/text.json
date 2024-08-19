@@ -8,23 +8,23 @@
         "menus": [
             {
                 "label": "Registrar marmitas",
-                "icon": "FaUtensils"
+                "icon": "registrar"
             },
             {
                 "label": "Marmitas",
-                "icon": "FaBox"
+                "icon": "alimento"
             },
             {
                 "label": "Lista de compras",
-                "icon": "FaShoppingCart"
+                "icon": "compra"
             },
             {
                 "label": "Relatórios",
-                "icon": "FaFileAlt"
+                "icon": "relatorio"
             },
             {
                 "label": "Estoque",
-                "icon": "FaWarehouse"
+                "icon": "estoque"
             }
         ]
     },
