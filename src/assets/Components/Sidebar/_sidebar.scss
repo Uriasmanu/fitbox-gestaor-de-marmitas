@@ -1,4 +1,6 @@
 .ContainerSidebar {
+ 
+
   display: flex;
   flex-direction: column;
   background: #fff8e2;
@@ -22,6 +24,7 @@
       border-radius: 50%;
     }
   }
+
   ul {
     display: flex;
     flex-direction: column;
@@ -37,7 +40,7 @@
       padding: 4% 10%;
       border-radius: 15px;
       gap: 5%;
-    
+
       &:hover {
         background: #fff;
         cursor: pointer;
