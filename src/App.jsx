@@ -3,6 +3,7 @@ import './App.css';
 import Registro from './assets/Pages/Registros';
 import NotFound from './assets/Pages/NotFound';
 import Home from './assets/Pages/Home';
+import '../src/assets/Styles/_styleBase.scss'
 
 function App() {
   return (
