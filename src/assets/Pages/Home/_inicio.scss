@@ -1,10 +1,29 @@
 .containerHome {
   width: 100vw;
   height: 100vh;
+  box-sizing: border-box;
+  display: flex;
 
 
-  .botaoMenu {
+  .botaoMenu{
     display: none;
+  }
 
+  .sideBar {
+    position: fixed;
+    top: 0;
+    width: 25vw; 
+    height: 100vh;
+    background-color: #fff;
+    z-index: 1;
+    transition: left 0.4s ease-in-out;
+
+    &.visivel {
+      left: 0;
+    }
+
+    &.invisivel {
+      left: -100%; 
+    }
   }
 }

@@ -5,7 +5,7 @@
   flex-direction: column;
   background: #fff8e2;
   height: 100vh;
-  width: 350px;
+  width: 100%;
   padding: 5% 2%;
   align-items: center;
 
@@ -29,8 +29,9 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    gap: 5%;
+    gap: 2%;
     margin-top: 20%;
+    width: 100%;
 
     li {
       display: flex;

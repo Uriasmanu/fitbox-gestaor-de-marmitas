@@ -1,5 +1,4 @@
 import "./_sidebar.scss"
-import "./_sidebarMobile.scss"
 
 import imagemUsuario from "../../Image/usuario.png"
 import texts from "../../Texts/text.json"

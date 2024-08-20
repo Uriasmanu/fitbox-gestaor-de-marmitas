@@ -1,10 +1,11 @@
 import './_botaoMenu.scss'
+import PropTypes from 'prop-types';
 
-const BotaoMenu = () => {
+const BotaoMenu = ({controleSidebar}) => {
     return (
         <div className='botaoMenu'>
-            <label class="burger" for="burger">
-                <input type="checkbox" id="burger" />
+            <label className="burger" htmlFor="burger">
+                <input type="checkbox" id="burger" onClick={controleSidebar}/>
                 <span></span>
                 <span></span>
                 <span></span>
@@ -12,5 +13,9 @@ const BotaoMenu = () => {
         </div>
     )
 }
+
+BotaoMenu.propTypes = {
+    controleSidebar: PropTypes.func.isRequired, 
+};
 
 export default BotaoMenu;
