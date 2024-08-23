@@ -18,6 +18,11 @@
     width: 39%;
     height: auto;
     transition: 0.4s ease-in-out;
+
+    p{
+      color: red;
+      font-size: 12px;
+    }
   }
 
   .form:hover {
@@ -57,7 +62,7 @@
     border: none;
     outline: none;
     width: 100%;
-    color: #d3d3d3;
+    color: #000;
   }
 
   .form .btn {
