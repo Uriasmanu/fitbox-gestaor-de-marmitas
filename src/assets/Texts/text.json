@@ -25,6 +25,10 @@
             {
                 "label": "Estoque",
                 "icon": "estoque"
+            },
+            {
+                "label": "Sair",
+                "icon": "sair"
             }
         ]
     },

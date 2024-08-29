@@ -10,6 +10,7 @@ import iconeCompra from '../../Image/compra.svg'
 import iconeEstoque from '../../Image/estoque.svg'
 import iconeRegistrar from '../../Image/registrar.svg'
 import iconeRelatorio from '../../Image/relatorio.svg'
+import iconeSair from '../../Image/Logout.svg'
 
 
 const Sidebar = () => {
@@ -18,7 +19,8 @@ const Sidebar = () => {
     compra: iconeCompra,
     estoque: iconeEstoque,
     registrar: iconeRegistrar,
-    relatorio: iconeRelatorio
+    relatorio: iconeRelatorio,
+    sair: iconeSair
   };
 
   return (
