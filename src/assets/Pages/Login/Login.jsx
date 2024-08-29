@@ -3,11 +3,13 @@ import  { useState } from 'react';
 import './_login.scss';
 import './_loginMobile.scss';
 import { useAuth } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const { token, isAuthenticated, error, loading, login } = useAuth();
+    const { isAuthenticated, error, loading, login } = useAuth();
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -15,8 +17,7 @@ const Login = () => {
     };
 
     if (isAuthenticated) {
-        // Redirecione ou mostre uma mensagem se o usuário estiver autenticado
-        return <p>Você está autenticado!</p>;
+        navigate('/home');
     }
 
     return (
