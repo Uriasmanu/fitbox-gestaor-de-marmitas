@@ -11,9 +11,19 @@ import iconeEstoque from '../../Image/estoque.svg'
 import iconeRegistrar from '../../Image/registrar.svg'
 import iconeRelatorio from '../../Image/relatorio.svg'
 import iconeSair from '../../Image/Logout.svg'
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+    logout(); // Chama a função de logout do contexto
+    navigate('/'); // Redireciona para a página de login
+  };
+
   const iconMap = {
     alimento: iconeAlimento,
     compra: iconeCompra,
@@ -31,7 +41,7 @@ const Sidebar = () => {
       <h2>Olá, {texts.sidebar.usuario}!</h2>
       <ul>
         {texts.sidebar.menus.map((menu, index) => (
-          <li key={index}>
+          <li key={index} onClick={menu.label === "Sair" ? handleLogout : null}>
             <span className="icon">
               <img src={iconMap[menu.icon]} alt={menu.label} />
             </span>
