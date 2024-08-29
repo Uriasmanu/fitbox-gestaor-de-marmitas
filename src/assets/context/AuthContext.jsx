@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }) => {
         if (token) {
             try {
                 const decodedToken = jwtDecode(token);
-                return decodedToken.sub || 'Usuário'; // Ajuste 'username' conforme o campo no payload
+                return decodedToken.sub || 'Usuário'; 
             } catch (error) {
                 return 'Usuário';
             }
