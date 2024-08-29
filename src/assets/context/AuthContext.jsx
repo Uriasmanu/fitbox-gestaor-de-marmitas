@@ -1,7 +1,9 @@
+// AuthContext.js
 import { createContext, useContext, useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import Cookies from 'js-cookie';
+import { jwtDecode } from 'jwt-decode';
 
 const AuthContext = createContext();
 
@@ -47,8 +49,20 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(false);
     };
 
+    const getUserName = () => {
+        if (token) {
+            try {
+                const decodedToken = jwtDecode(token);
+                return decodedToken.sub || 'Usuário'; // Ajuste 'username' conforme o campo no payload
+            } catch (error) {
+                return 'Usuário';
+            }
+        }
+        return 'Usuário';
+    };
+
     return (
-        <AuthContext.Provider value={{ token, isAuthenticated, error, loading, login, logout }}>
+        <AuthContext.Provider value={{ token, isAuthenticated, error, loading, login, logout, getUserName }}>
             {children}
         </AuthContext.Provider>
     );

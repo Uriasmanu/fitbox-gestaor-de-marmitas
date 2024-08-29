@@ -4,7 +4,6 @@
         "description": "Descubra nossos produtos e serviços de alta qualidade."
     },
     "sidebar": {
-        "usuario": "Antonia",
         "menus": [
             {
                 "label": "Registrar marmitas",

@@ -16,6 +16,9 @@ import { useAuth } from "../../context/AuthContext";
 
 
 const Sidebar = () => {
+  const { getUserName } = useAuth();
+    const username = getUserName();
+
   const navigate = useNavigate();
   const { logout } = useAuth();
 
@@ -38,7 +41,7 @@ const Sidebar = () => {
       <div className="moldura">
         <img src={imagemUsuario} alt="Imagem do usuário" />
       </div>
-      <h2>Olá, {texts.sidebar.usuario}!</h2>
+      <h2>Olá, {username}!</h2>
       <ul>
         {texts.sidebar.menus.map((menu, index) => (
           <li key={index} onClick={menu.label === "Sair" ? handleLogout : null}>
