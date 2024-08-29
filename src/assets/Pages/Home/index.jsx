@@ -24,7 +24,7 @@ const Home = () => {
             </header>
             <main>
                 <div>
-                    <h2>inicio</h2>
+                    <h2>Qual é a escolha saudável de hoje?</h2>
                 </div>
             </main>
             <footer>
