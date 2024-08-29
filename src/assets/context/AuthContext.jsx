@@ -1,12 +1,12 @@
 import { createContext, useContext, useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import Cookies from 'js-cookie'; // Importa js-cookie
+import Cookies from 'js-cookie';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [token, setToken] = useState(Cookies.get('authToken') || null); // Tenta ler o token do cookie
+    const [token, setToken] = useState(Cookies.get('authToken') || null);
     const [isAuthenticated, setIsAuthenticated] = useState(!!token);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -25,8 +25,7 @@ export const AuthProvider = ({ children }) => {
             const data = response.data;
 
             if (data.token) {
-                // Armazena o token no cookie e no estado
-                Cookies.set('authToken', data.token, { expires: 1 }); // O cookie expira em 1 dias
+                Cookies.set('authToken', data.token, { expires: 1 });
                 setToken(data.token);
                 setIsAuthenticated(true);
             } else {
@@ -43,7 +42,6 @@ export const AuthProvider = ({ children }) => {
     };
 
     const logout = () => {
-        // Remove o cookie e atualiza o estado
         Cookies.remove('authToken');
         setToken(null);
         setIsAuthenticated(false);
