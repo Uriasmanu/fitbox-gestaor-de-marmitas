@@ -1,5 +1,6 @@
 @media (max-width: 728px) {
   .ContainerSidebar {
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     background: #fff8e2;
