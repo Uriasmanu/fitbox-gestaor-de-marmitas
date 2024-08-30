@@ -1,4 +1,5 @@
 import './_botaoNavegar.scss';
+import './_botaoNavegarMobile.scss';
 import PropTypes from 'prop-types';
 
 const BotaoNavegacao = ({ icone, texto }) => {
