@@ -7,7 +7,9 @@ const CardMarmita = () => {
         <div className='container-CardMarmita'>
             <div className="card">
                 <div className="bar"></div>
-                <div className="card_form"></div>
+                <div className="card_form">
+                    <img src="" alt="" />
+                </div>
                 <div className="card_data">
                     <div className="data">
                         <div className="text">
