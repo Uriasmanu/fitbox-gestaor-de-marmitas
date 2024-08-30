@@ -1,43 +1,61 @@
 import { useState } from "react";
 import BotaoMenu from "../../Components/BotaoMenu/BotaoMenu";
 import Sidebar from "../../Components/Sidebar";
-import './_inicio.scss'
-import './_inicioMobile.scss'
-import BotaoNavegacao from "../../Components/BotaoNavegacao/BotaoNavegacao";
+import BotaoNavegacao from "../../Components/BotaoNavegar/BotaoNavegar";
+import './_inicio.scss';
+import './_inicioMobile.scss';
+
+// Importando os ícones corretamente
+import iconeMarmita from '../../Image/marmita.svg';
+import iconeFavoritar from '../../Image/favoritar.svg';
+import iconeConsumidas from '../../Image/consumidas.svg';
+import iconeHistorico from '../../Image/historico.svg';
+import iconeReceita from '../../Image/receita.svg';
+
+// Atualizando o objeto de navegação com as importações corretas
+const navegacao = {
+  abas: [
+    { label: "Marmita", icon: iconeMarmita },
+    { label: "Favoritar", icon: iconeFavoritar },
+    { label: "Consumidas", icon: iconeConsumidas },
+    { label: "Histórico", icon: iconeHistorico },
+    { label: "Receita", icon: iconeReceita }
+  ]
+};
 
 const Home = () => {
-    const [sidebarVisivel, setSidebarVisivel] = useState(false);
+  const [sidebarVisivel, setSidebarVisivel] = useState(false);
 
-    const controleSidebar = () => {
-        setSidebarVisivel(!sidebarVisivel);
-    }
+  const controleSidebar = () => {
+    setSidebarVisivel(!sidebarVisivel);
+  }
 
-    return (
-        <div className="containerHome">
-            <div className="botaoMenu">
-                <BotaoMenu controleSidebar={controleSidebar} />
-            </div>
-            <header className="sideBar">
-
-                <section className={sidebarVisivel ? 'sideBar invisivel': 'sideBar visivel'}>
-                    <Sidebar />
-                </section>
-            </header>
-            <main>
-                <div className="titulo">
-                    <h2>Qual é a escolha saudável de hoje?</h2>
-                </div>
-
-                <div className="navegacao">
-                    <BotaoNavegacao/>
-                </div>
-            </main>
-            <footer>
-
-            </footer>
-
+  return (
+    <div className="containerHome">
+      <div className="botaoMenu">
+        <BotaoMenu controleSidebar={controleSidebar} />
+      </div>
+      <header className="sideBar">
+        <section className={sidebarVisivel ? 'sideBar invisivel' : 'sideBar visivel'}>
+          <Sidebar />
+        </section>
+      </header>
+      <main>
+        <div className="titulo">
+          <h2>Qual é a escolha saudável de hoje?</h2>
         </div>
-    )
-}
+
+        <div className="navegacao">
+          {navegacao.abas.map((aba, index) => (
+            <BotaoNavegacao key={index} icone={aba.icon} texto={aba.label} />
+          ))}
+        </div>
+      </main>
+      <footer>
+        {/* Footer content */}
+      </footer>
+    </div>
+  );
+};
 
 export default Home;

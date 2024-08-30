@@ -31,6 +31,31 @@
             }
         ]
     },
+    "navegacao": {
+        "abas": [
+            {
+                "label": "marmita",
+                "icon": "marmita"
+            },
+            {
+                "label": "favoritar",
+                "icon": "favoritar"
+            },
+            {
+                "label": "consumidas",
+                "icon": "consumidas"
+            },
+            {
+                "label": "historico",
+                "icon": "historico"
+            },
+            {
+                "label": "receita",
+                "icon": "receita"
+            }
+
+        ]
+    },
     "registro": {
         "title": "Registro de Usuário",
         "description": "Preencha o formulário para se registrar."

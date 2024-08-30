@@ -3,7 +3,7 @@
 const Loading = () =>{
     return(
         <div className="container-loading">
-            <div class="custom-loader"></div>
+            <div className="custom-loader"></div>
         </div>
     )
 }

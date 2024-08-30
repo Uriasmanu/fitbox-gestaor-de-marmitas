@@ -1,5 +1,5 @@
 // Login.js
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './_login.scss';
 import './_loginMobile.scss';
 import { useAuth } from '../../context/AuthContext';
