@@ -25,10 +25,15 @@ const navegacao = {
 
 const Home = () => {
   const [sidebarVisivel, setSidebarVisivel] = useState(false);
+  const [abaSelecionada, setAbaSelecionada] = useState(null);
 
   const controleSidebar = () => {
     setSidebarVisivel(!sidebarVisivel);
   }
+
+  const handleSelecaoAba = (index) => {
+    setAbaSelecionada(index);
+  };
 
   return (
     <div className="containerHome">
@@ -47,7 +52,13 @@ const Home = () => {
 
         <div className="navegacao">
           {navegacao.abas.map((aba, index) => (
-            <BotaoNavegacao key={index} icone={aba.icon} texto={aba.label} />
+            <BotaoNavegacao
+              key={index}
+              icone={aba.icon}
+              texto={aba.label}
+              selecionado={abaSelecionada === index}
+              onClick={() => handleSelecaoAba(index)}
+            />
           ))}
         </div>
       </main>

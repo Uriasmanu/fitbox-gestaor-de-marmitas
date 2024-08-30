@@ -1,6 +1,7 @@
 /* From Uiverse.io by barisdogansutcu */
 .container-botaoNavegacao {
-    box-sizing: border-box;
+  box-sizing: border-box;
+
   button {
     display: flex;
     align-items: center;
@@ -14,38 +15,37 @@
     border-radius: 50px;
     transform: translate(0px, 0px) rotate(0deg);
     transition: 0.2s;
-    box-shadow: -4px -2px 16px 0px #ffffff,
-      4px 2px 16px 0px rgb(95 157 231 / 48%);
+    box-shadow: -4px -2px 16px 0px #ffffff, 4px 2px 16px 0px rgb(95 157 231 / 48%);
     width: 100px;
     height: 190px;
     flex-direction: column;
     padding: 10px;
+    cursor: pointer;
+    
+    &:disabled {
+      cursor: not-allowed;
+    }
 
-
-    .icone-navegacao{
-        background: #F5F5F5;
-        border-radius: 50px;
-        width: 80px;
-        height: 80px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 30px;
-
-        &:hover{
-          background: #fff;
-        }
+    .icone-navegacao {
+      background: #F5F5F5;
+      border-radius: 50px;
+      width: 80px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 30px;
     }
   }
 
-  button:hover {
+  button.selecionado {
     color: #516d91;
     background-color: #FFD95F;
     box-shadow: -2px -1px 8px 0px #ffffff, 2px 1px 8px 0px rgb(95 157 231 / 48%);
-    cursor: pointer;
   }
 
   button:active {
     box-shadow: none;
   }
 }
+

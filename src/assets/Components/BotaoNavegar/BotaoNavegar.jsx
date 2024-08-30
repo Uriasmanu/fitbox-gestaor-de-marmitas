@@ -2,10 +2,10 @@ import './_botaoNavegar.scss';
 import './_botaoNavegarMobile.scss';
 import PropTypes from 'prop-types';
 
-const BotaoNavegacao = ({ icone, texto }) => {
+const BotaoNavegacao = ({ icone, texto, selecionado, onClick }) => {
   return (
     <div className="container-botaoNavegacao">
-      <button>
+      <button onClick={onClick} className={selecionado ? 'selecionado' : ''} disabled={selecionado}>
         <div className='icone-navegacao'>
           <img src={icone} alt={texto} />
         </div>
@@ -16,8 +16,10 @@ const BotaoNavegacao = ({ icone, texto }) => {
 };
 
 BotaoNavegacao.propTypes = {
-    icone: PropTypes.string.isRequired, 
-    texto: PropTypes.string.isRequired, 
-  };
+  icone: PropTypes.string.isRequired, 
+  texto: PropTypes.string.isRequired, 
+  selecionado: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired
+};
 
 export default BotaoNavegacao;
