@@ -3,6 +3,7 @@ import BotaoMenu from "../../Components/BotaoMenu/BotaoMenu";
 import Sidebar from "../../Components/Sidebar";
 import './_inicio.scss'
 import './_inicioMobile.scss'
+import BotaoNavegacao from "../../Components/BotaoNavegacao/BotaoNavegacao";
 
 const Home = () => {
     const [sidebarVisivel, setSidebarVisivel] = useState(false);
@@ -23,8 +24,12 @@ const Home = () => {
                 </section>
             </header>
             <main>
-                <div>
+                <div className="titulo">
                     <h2>Qual é a escolha saudável de hoje?</h2>
+                </div>
+
+                <div className="navegacao">
+                    <BotaoNavegacao/>
                 </div>
             </main>
             <footer>
