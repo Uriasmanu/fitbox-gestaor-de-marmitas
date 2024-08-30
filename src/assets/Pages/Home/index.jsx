@@ -11,6 +11,7 @@ import iconeFavoritar from '../../Image/favoritar.svg';
 import iconeConsumidas from '../../Image/consumidas.svg';
 import iconeHistorico from '../../Image/historico.svg';
 import iconeReceita from '../../Image/receita.svg';
+import CardMarmita from "../../Components/CardMarmita/CardMarmita";
 
 // Atualizando o objeto de navegação com as importações corretas
 const navegacao = {
@@ -60,6 +61,10 @@ const Home = () => {
               onClick={() => handleSelecaoAba(index)}
             />
           ))}
+        </div>
+
+        <div className="container-cards-marmitas">
+          <CardMarmita />
         </div>
       </main>
       <footer>
