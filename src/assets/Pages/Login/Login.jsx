@@ -6,7 +6,6 @@ import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../../Components/Loading/Loading';
 
-
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -19,9 +18,9 @@ const Login = () => {
         }
     }, [isAuthenticated, navigate]);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        login(username, password);
+        await login(username, password);
     };
 
     return (
@@ -37,7 +36,7 @@ const Login = () => {
                         </svg>
                         <input 
                             autoComplete="off" 
-                            placeholder="Usuario" 
+                            placeholder="Usuário" 
                             className="input-field" 
                             type="text"
                             value={username}

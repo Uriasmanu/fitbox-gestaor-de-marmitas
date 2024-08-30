@@ -125,4 +125,10 @@
     background-color: red;
     color: #000;
   }
+
+  button{
+    &:hover{
+      cursor: pointer;
+    }
+  }
 }
