@@ -5,6 +5,8 @@ import BotaoNavegacao from "../../Components/BotaoNavegar/BotaoNavegar";
 import './_inicio.scss';
 import './_inicioMobile.scss';
 
+
+
 // Importando os ícones corretamente
 import iconeMarmita from '../../Image/marmita.svg';
 import iconeFavoritar from '../../Image/favoritar.svg';
@@ -14,7 +16,8 @@ import iconeReceita from '../../Image/receita.svg';
 import CardMarmita from "../../Components/CardMarmita/CardMarmita";
 import ComponenteNotificacao from "../../Components/ComponenteNotificacao/ComponenteNotificacao";
 
-
+import data from '../../JSONs/Marmitas.json';
+const marmitas = data.Marmitas;
 
 
 // Atualizando o objeto de navegação com as importações corretas
@@ -68,8 +71,19 @@ const Home = () => {
         </div>
 
         <div className="container-cards-marmitas">
-          <CardMarmita />
-
+          {Array.isArray(marmitas) ? (
+            marmitas.map(marmita => (
+              <CardMarmita
+                key={marmita.id}
+                id={marmita.id}
+                name={marmita.name}
+                descricao={marmita.descricao}
+                img={marmita.img}
+              />
+            ))
+          ) : (
+            <p>Erro: Dados de marmitas não são um array.</p>
+          )}
         </div>
 
       </main>

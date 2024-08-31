@@ -1,35 +1,40 @@
 import BotaoFavoritar from '../BotaoFavoritar/BotaoFavoritar';
 import './_CardMarmita.scss'
 import './_CardMarmitaMobile.scss'
+import PropTypes from 'prop-types';
 
-const CardMarmita = () => {
+const CardMarmita = ({ id, name, descricao, img }) => {
     return (
         <div className='container-CardMarmita'>
             <div className="card">
                 <div className="bar"></div>
                 <div className="card_form">
-                    <img src="" alt="" />
+                    <img src={img} alt={name} />
                 </div>
                 <div className="card_data">
                     <div className="data">
                         <div className="text">
-                            <label className="text_m">Main Title</label>
+                            <label className="text_m">{name}</label>
                             <div className="cube text_s">
                                 <label className="side front">Access the list (Topic)</label>
-                                <label className="side top">Username-id</label>
+                                <label className="side top">{id}</label>
                             </div>
-                            <label className="text_d"
-                            >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Unum nescio,
-                                quo modo possit, si luxuriosus sit, finitas cupiditates habere.
+                            <label className="text_d">
+                                {descricao}
                             </label>
                         </div>
                     </div>
-                    <BotaoFavoritar/>
+                    <BotaoFavoritar />
                 </div>
             </div>
-
         </div>
     )
 }
 
+CardMarmita.propTypes = {
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    descricao: PropTypes.string.isRequired,
+    img: PropTypes.string.isRequired
+};
 export default CardMarmita;
