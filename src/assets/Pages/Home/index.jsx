@@ -6,7 +6,6 @@ import './_inicio.scss';
 import './_inicioMobile.scss';
 
 
-
 // Importando os ícones corretamente
 import iconeMarmita from '../../Image/marmita.svg';
 import iconeFavoritar from '../../Image/favoritar.svg';
@@ -90,6 +89,7 @@ const Home = () => {
       <section className="container-rightBar">
         <div className="topo">
           <ComponenteNotificacao />
+          {/* Área para arrastar e soltar */}
 
         </div>
       </section>
