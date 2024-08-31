@@ -16,6 +16,8 @@ import CardMarmita from "../../Components/CardMarmita/CardMarmita";
 import ComponenteNotificacao from "../../Components/ComponenteNotificacao/ComponenteNotificacao";
 
 import data from '../../JSONs/Marmitas.json';
+import ComponenteDragDrop from "../../Components/ComponenteDragDrop/ComponenteDragDrop";
+
 const marmitas = data.Marmitas;
 
 
@@ -84,7 +86,6 @@ const Home = () => {
             <p>Erro: Dados de marmitas não são um array.</p>
           )}
         </div>
-
       </main>
       <section className="container-rightBar">
         <div className="topo">
