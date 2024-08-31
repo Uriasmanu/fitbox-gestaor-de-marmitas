@@ -4,7 +4,8 @@ import './_login.scss';
 import './_loginMobile.scss';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import Loading from '../../Components/Loading/Loading';
+import LoadingComponent from '../../Components/LoadingComponent/LoadingComponent';
+
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -24,9 +25,9 @@ const Login = () => {
     };
 
     return (
-        <>
-            {loading && <Loading />}
+        <>       
             <div className='container-login'>
+            
                 <form className="form" onSubmit={handleSubmit}>
                     <p id="heading">Login</p>
                     {error && <p className="error">{error}</p>}

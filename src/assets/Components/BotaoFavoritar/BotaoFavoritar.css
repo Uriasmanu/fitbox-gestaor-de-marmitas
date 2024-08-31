@@ -1,0 +1,33 @@
+.container-favoritar {
+  /* From Uiverse.io by Peary74 */
+}
+.container-favoritar .btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: none;
+  background-color: transparent;
+  position: relative;
+}
+.container-favoritar .btn:hover > .icon {
+  transform: scale(1.2);
+  cursor: pointer;
+  transition: 0.2s linear;
+}
+.container-favoritar .btn:focus > .icon {
+  fill: #fd1853;
+  animation: grosseur 0.2s linear;
+}
+@keyframes grosseur {
+  0% {
+    width: 50px;
+    height: 50px;
+    fill: #fd1853;
+  }
+  100% {
+    width: 30px;
+    height: 30px;
+    fill: #fd1853;
+  }
+}/*# sourceMappingURL=BotaoFavoritar.css.map */
