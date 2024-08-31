@@ -1,6 +1,6 @@
 import BotaoFavoritar from '../BotaoFavoritar/BotaoFavoritar';
-import './CardMarmita.scss'
-import './CardMarmitaMobile.scss'
+import './_CardMarmita.scss'
+import './_CardMarmitaMobile.scss'
 
 const CardMarmita = () => {
     return (

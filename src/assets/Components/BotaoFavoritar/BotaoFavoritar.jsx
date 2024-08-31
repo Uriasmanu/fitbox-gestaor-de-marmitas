@@ -1,5 +1,5 @@
-import './BotaoFavoritar.scss'
-import './BotaoFavoritarMobile.scss'
+import './_BotaoFavoritar.scss'
+import './_BotaoFavoritarMobile.scss'
 
 const BotaoFavoritar = () => {
     return (

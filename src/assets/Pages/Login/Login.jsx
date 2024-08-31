@@ -24,10 +24,8 @@ const Login = () => {
 
     return (
         <>
-            {/* Exibe o componente de loading enquanto o login está em andamento */}
-            {loading && <ComponenteLoading />}
-            
             <div className='container-login'>
+            {loading && <ComponenteLoading />}
                 <form className="form" onSubmit={handleSubmit}>
                     <p id="heading">Login</p>
                     {error && <p className="error">{error}</p>}
