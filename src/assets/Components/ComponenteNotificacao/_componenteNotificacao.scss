@@ -1,3 +1,4 @@
+.notificacao{
 /* From Uiverse.io by vinodjangid07 */ 
 .button {
     width: 50px;
@@ -6,7 +7,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgb(44, 44, 44);
+    background-color: #FDF0C6;
     border-radius: 50%;
     cursor: pointer;
     transition-duration: .3s;
@@ -19,11 +20,11 @@
   }
   
   .bell path {
-    fill: white;
+    fill: #0c1e35;
   }
   
   .button:hover {
-    background-color: rgb(56, 56, 56);
+    background-color: #FFD95F;
   }
   
   .button:hover .bell {
@@ -62,3 +63,4 @@
     transform: scale(0.8);
   }
   
+}

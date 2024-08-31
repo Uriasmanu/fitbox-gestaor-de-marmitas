@@ -12,6 +12,9 @@ import iconeConsumidas from '../../Image/consumidas.svg';
 import iconeHistorico from '../../Image/historico.svg';
 import iconeReceita from '../../Image/receita.svg';
 import CardMarmita from "../../Components/CardMarmita/CardMarmita";
+import ComponenteNotificacao from "../../Components/ComponenteNotificacao/ComponenteNotificacao";
+
+
 
 
 // Atualizando o objeto de navegação com as importações corretas
@@ -66,9 +69,16 @@ const Home = () => {
 
         <div className="container-cards-marmitas">
           <CardMarmita />
-          
+
         </div>
+
       </main>
+      <section className="container-rightBar">
+        <div className="topo">
+          <ComponenteNotificacao />
+
+        </div>
+      </section>
       <footer>
         {/* Footer content */}
       </footer>

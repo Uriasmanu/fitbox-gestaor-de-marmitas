@@ -4,15 +4,13 @@
   box-sizing: border-box;
   display: flex;
 
-
-  .botaoMenu{
+  .botaoMenu {
     display: none;
   }
 
   .sideBar {
-    
     top: 0;
-    width: 25vw; 
+    width: 25vw;
     height: 100vh;
     background-color: #fff;
     z-index: 1;
@@ -23,7 +21,7 @@
     }
 
     &.invisivel {
-      left: -100%; 
+      left: -100%;
     }
   }
 
@@ -35,15 +33,26 @@
     z-index: 0;
     padding: 5%;
 
-    .navegacao{
+    .navegacao {
       margin-top: 5%;
       display: flex;
       gap: 4%;
       width: 85%;
     }
 
-    .container-cards-marmitas{
+    .container-cards-marmitas {
       margin-top: 5%;
+    }
+  }
+  .container-rightBar {
+    height: 100%;
+    width: 20vw;
+    padding: 3% 2%;
+    border-left: solid #FDF0C6 3px;
+
+    .topo {
+      width: 100%;
+      display: flex;
     }
   }
 }
