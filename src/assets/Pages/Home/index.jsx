@@ -15,6 +15,7 @@ import ComponenteNotificacao from "../../Components/ComponenteNotificacao/Compon
 
 import data from '../../JSONs/Marmitas.json';
 import ComponeteDia from "../../Components/ComponeteDia/ComponeteDia";
+import ComponenteUser from "../../Components/ComponenteUser/ComponenteUser";
 
 const marmitas = data.Marmitas;
 
@@ -133,6 +134,8 @@ const Home = () => {
 
       <section className="container-rightBar">
         <div className="topo">
+          <ComponenteUser />
+
           <ComponenteNotificacao />
         </div>
 
