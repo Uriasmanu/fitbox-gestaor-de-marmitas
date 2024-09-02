@@ -5,8 +5,6 @@ import BotaoNavegacao from "../../Components/BotaoNavegar/BotaoNavegar";
 import './_inicio.scss';
 import './_inicioMobile.scss';
 
-
-// Importando os ícones corretamente
 import iconeMarmita from '../../Image/marmita.svg';
 import iconeFavoritar from '../../Image/favoritar.svg';
 import iconeConsumidas from '../../Image/consumidas.svg';
@@ -16,12 +14,9 @@ import CardMarmita from "../../Components/CardMarmita/CardMarmita";
 import ComponenteNotificacao from "../../Components/ComponenteNotificacao/ComponenteNotificacao";
 
 import data from '../../JSONs/Marmitas.json';
-import ComponenteDragDrop from "../../Components/ComponenteDragDrop/ComponenteDragDrop";
 
 const marmitas = data.Marmitas;
 
-
-// Atualizando o objeto de navegação com as importações corretas
 const navegacao = {
   abas: [
     { label: "Marmita", icon: iconeMarmita },
@@ -35,10 +30,38 @@ const navegacao = {
 const Home = () => {
   const [sidebarVisivel, setSidebarVisivel] = useState(false);
   const [abaSelecionada, setAbaSelecionada] = useState(null);
+  const [items, setItems] = useState(marmitas); // Usar marmitas diretamente como items
+  const [dropZone, setDropZone] = useState([]);
+
+  const onDragStart = (e, fromZone, index) => {
+    e.dataTransfer.setData("fromZone", fromZone);
+    e.dataTransfer.setData("itemIndex", index);
+  };
+
+  const onDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const onDrop = (e, toZone) => {
+    e.preventDefault();
+
+    const fromZone = e.dataTransfer.getData("fromZone");
+    const itemIndex = e.dataTransfer.getData("itemIndex");
+
+    if (fromZone === "items" && toZone === "dropZone") {
+      const item = items[itemIndex];
+      setItems(items.filter((_, i) => i !== parseInt(itemIndex)));
+      setDropZone([...dropZone, item]);
+    } else if (fromZone === "dropZone" && toZone === "items") {
+      const item = dropZone[itemIndex];
+      setDropZone(dropZone.filter((_, i) => i !== parseInt(itemIndex)));
+      setItems([...items, item]);
+    }
+  };
 
   const controleSidebar = () => {
     setSidebarVisivel(!sidebarVisivel);
-  }
+  };
 
   const handleSelecaoAba = (index) => {
     setAbaSelecionada(index);
@@ -70,28 +93,66 @@ const Home = () => {
             />
           ))}
         </div>
-
-        <div className="container-cards-marmitas">
-          {Array.isArray(marmitas) ? (
-            marmitas.map(marmita => (
-              <CardMarmita
+        
+        <div style={{ display: 'flex', gap: '20px' }}>
+          {/* Lista de Marmitas */}
+          <div
+            className="container-cards-marmitas"
+            style={{ padding: "10px", border: "1px solid black", width: "200px" }}
+            onDragOver={onDragOver}
+            onDrop={(e) => onDrop(e, "items")}
+          >
+            {items.map((marmita, index) => (
+              <div
                 key={marmita.id}
-                id={marmita.id}
-                name={marmita.name}
-                descricao={marmita.descricao}
-                img={marmita.img}
-              />
-            ))
-          ) : (
-            <p>Erro: Dados de marmitas não são um array.</p>
-          )}
+                draggable
+                onDragStart={(e) => onDragStart(e, "items", index)}
+                style={{ cursor: "grab" }}
+              >
+                <CardMarmita
+                  id={marmita.id}
+                  name={marmita.name}
+                  descricao={marmita.descricao}
+                  img={marmita.img}
+                />
+              </div>
+            ))}
+          </div>
+
+          
         </div>
       </main>
       <section className="container-rightBar">
         <div className="topo">
           <ComponenteNotificacao />
-          {/* Área para arrastar e soltar */}
-
+          {/* Área de Drop */}
+          <div
+            style={{
+              padding: "10px",
+              border: "1px solid black",
+              width: "200px",
+              minHeight: "100px",
+              background: "lightgray"
+            }}
+            onDragOver={onDragOver}
+            onDrop={(e) => onDrop(e, "dropZone")}
+          >
+            {dropZone.map((marmita, index) => (
+              <div
+                key={marmita.id}
+                draggable
+                onDragStart={(e) => onDragStart(e, "dropZone", index)}
+                style={{ cursor: "grab" }}
+              >
+                <CardMarmita
+                  id={marmita.id}
+                  name={marmita.name}
+                  descricao={marmita.descricao}
+                  img={marmita.img}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </section>
       <footer>

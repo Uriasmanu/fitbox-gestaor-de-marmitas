@@ -3,6 +3,7 @@ import './_CardMarmita.scss'
 import './_CardMarmitaMobile.scss'
 import PropTypes from 'prop-types';
 
+
 const CardMarmita = ({ id, name, descricao, img }) => {
     return (
         <div className='container-CardMarmita'>
