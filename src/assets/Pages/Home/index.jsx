@@ -12,10 +12,12 @@ import iconeReceita from '../../Image/receita.svg';
 import CardMarmita from "../../Components/CardMarmita/CardMarmita";
 import ComponenteNotificacao from "../../Components/ComponenteNotificacao/ComponenteNotificacao";
 import data from '../../JSONs/Marmitas.json';
+import Slider from 'infinite-react-carousel';
 
 import ComponenteUser from "../../Components/ComponenteUser/ComponenteUser";
 import BotaoEnviar from "../../Components/BotaoEnviar/BotaoEnviar";
 import ComponeteDia from './../../Components/ComponeteDia/ComponeteDia';
+
 
 const marmitas = data.Marmitas;
 
@@ -140,17 +142,13 @@ const Home = () => {
           <Sidebar />
         </section>
       </header>
-      <main
-        onTouchStart={handleTouchStartMain}
-        onTouchMove={handleTouchMoveMain}
-        onTouchEnd={handleTouchEndMain}
-        style={{ marginRight: rightBarVisible ? '300px' : '0' }} // Ajuste o valor conforme o tamanho do container
-      >
+      <main>
         <div className="titulo">
           <h2>Qual é a escolha saudável de hoje?</h2>
         </div>
 
         <div className="navegacao">
+
           {navegacao.abas.map((aba, index) => (
             <BotaoNavegacao
               key={index}
@@ -159,13 +157,19 @@ const Home = () => {
               selecionado={abaSelecionada === index}
               onClick={() => handleSelecaoAba(index)}
             />
+
           ))}
+
         </div>
 
         <div
           className="container-cards-marmitas"
           onDragOver={onDragOver}
           onDrop={(e) => onDrop(e, "items")}
+          onTouchStart={handleTouchStartMain}
+          onTouchMove={handleTouchMoveMain}
+          onTouchEnd={handleTouchEndMain}
+          style={{ marginRight: rightBarVisible ? '300px' : '0' }}
         >
           {items.map((marmita, index) => (
             <div
