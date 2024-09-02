@@ -1,10 +1,9 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import BotaoMenu from "../../Components/BotaoMenu/BotaoMenu";
 import Sidebar from "../../Components/Sidebar";
 import BotaoNavegacao from "../../Components/BotaoNavegar/BotaoNavegar";
 import './_inicio.scss';
 import './_inicioMobile.scss';
-
 import iconeMarmita from '../../Image/marmita.svg';
 import iconeFavoritar from '../../Image/favoritar.svg';
 import iconeConsumidas from '../../Image/consumidas.svg';
@@ -12,11 +11,11 @@ import iconeHistorico from '../../Image/historico.svg';
 import iconeReceita from '../../Image/receita.svg';
 import CardMarmita from "../../Components/CardMarmita/CardMarmita";
 import ComponenteNotificacao from "../../Components/ComponenteNotificacao/ComponenteNotificacao";
-
 import data from '../../JSONs/Marmitas.json';
-import ComponeteDia from "../../Components/ComponeteDia/ComponeteDia";
+
 import ComponenteUser from "../../Components/ComponenteUser/ComponenteUser";
 import BotaoEnviar from "../../Components/BotaoEnviar/BotaoEnviar";
+import ComponeteDia from './../../Components/ComponeteDia/ComponeteDia';
 
 const marmitas = data.Marmitas;
 
@@ -36,6 +35,55 @@ const Home = () => {
   const [items, setItems] = useState(marmitas);
   const [dropAlmoco, setDropAlmoco] = useState([]);
   const [dropJantar, setDropJantar] = useState([]);
+  const [rightBarVisible, setRightBarVisible] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+
+  const containerRightBarRef = useRef(null);
+
+  // Funções de arrasto para o main
+  const handleTouchStartMain = (e) => {
+    setStartX(e.touches[0].clientX);
+    setIsDragging(true);
+  };
+
+  const handleTouchMoveMain = (e) => {
+    if (!isDragging) return;
+
+    const endX = e.touches[0].clientX;
+    const deltaX = endX - startX;
+
+    // Detecta arrasto para a esquerda
+    if (deltaX < -100) { // Ajuste a sensibilidade conforme necessário
+      setRightBarVisible(true);
+    }
+  };
+
+  const handleTouchEndMain = () => {
+    setIsDragging(false);
+  };
+
+  // Funções de arrasto para o containerRightBar
+  const handleTouchStartRightBar = (e) => {
+    setStartX(e.touches[0].clientX);
+    setIsDragging(true);
+  };
+
+  const handleTouchMoveRightBar = (e) => {
+    if (!isDragging) return;
+
+    const endX = e.touches[0].clientX;
+    const deltaX = endX - startX;
+
+    // Detecta arrasto para a direita
+    if (deltaX > 100) { // Ajuste a sensibilidade conforme necessário
+      setRightBarVisible(false);
+    }
+  };
+
+  const handleTouchEndRightBar = () => {
+    setIsDragging(false);
+  };
 
   const onDragStart = (e, fromZone, index) => {
     e.dataTransfer.setData("fromZone", fromZone);
@@ -92,7 +140,12 @@ const Home = () => {
           <Sidebar />
         </section>
       </header>
-      <main>
+      <main
+        onTouchStart={handleTouchStartMain}
+        onTouchMove={handleTouchMoveMain}
+        onTouchEnd={handleTouchEndMain}
+        style={{ marginRight: rightBarVisible ? '300px' : '0' }} // Ajuste o valor conforme o tamanho do container
+      >
         <div className="titulo">
           <h2>Qual é a escolha saudável de hoje?</h2>
         </div>
@@ -133,10 +186,15 @@ const Home = () => {
         </div>
       </main>
 
-      <section className="container-rightBar">
+      <section
+        className={`container-rightBar ${rightBarVisible ? 'slide-in' : ''}`}
+        ref={containerRightBarRef}
+        onTouchStart={handleTouchStartRightBar}
+        onTouchMove={handleTouchMoveRightBar}
+        onTouchEnd={handleTouchEndRightBar}
+      >
         <div className="topo">
           <ComponenteUser />
-
           <ComponenteNotificacao />
         </div>
 
@@ -145,7 +203,6 @@ const Home = () => {
           <ComponeteDia />
         </div>
 
-        {/* Área de Drop para Almoço */}
         <div className="conatainer-drop-1">
           <h4>Almoço</h4>
           <div
@@ -172,7 +229,6 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Área de Drop para Jantar */}
         <div className="conatainer-drop">
           <h4>Jantar</h4>
           <div
@@ -198,7 +254,10 @@ const Home = () => {
             ))}
           </div>
         </div>
-        <BotaoEnviar/>
+
+        <div className="container-botao-enviar">
+          <BotaoEnviar />
+        </div>
       </section>
     </div>
   );
