@@ -12,7 +12,7 @@ import iconeReceita from '../../Image/receita.svg';
 import CardMarmita from "../../Components/CardMarmita/CardMarmita";
 import ComponenteNotificacao from "../../Components/ComponenteNotificacao/ComponenteNotificacao";
 import data from '../../JSONs/Marmitas.json';
-import Slider from 'infinite-react-carousel';
+
 
 import ComponenteUser from "../../Components/ComponenteUser/ComponenteUser";
 import BotaoEnviar from "../../Components/BotaoEnviar/BotaoEnviar";
