@@ -16,6 +16,7 @@ import ComponenteNotificacao from "../../Components/ComponenteNotificacao/Compon
 import data from '../../JSONs/Marmitas.json';
 import ComponeteDia from "../../Components/ComponeteDia/ComponeteDia";
 import ComponenteUser from "../../Components/ComponenteUser/ComponenteUser";
+import BotaoEnviar from "../../Components/BotaoEnviar/BotaoEnviar";
 
 const marmitas = data.Marmitas;
 
@@ -197,6 +198,7 @@ const Home = () => {
             ))}
           </div>
         </div>
+        <BotaoEnviar/>
       </section>
     </div>
   );
