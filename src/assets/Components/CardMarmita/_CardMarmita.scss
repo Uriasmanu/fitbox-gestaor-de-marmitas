@@ -1,16 +1,21 @@
 .container-CardMarmita {
-    width: 70%;
+    width: auto;
     /* From Uiverse.io by Cobp */
     .card {
         position: relative;
         display: flex;
-        
+        width: auto;
         background-color: #fff;
         padding: 10px;
         border-radius: 6px;
         gap: 0.5rem;
         height: max-content;
         box-shadow: -4px -2px 16px 0px #ffffff, 7px 7px 16px 0px rgb(95 157 231 / 48%);
+
+        .card_data.hidden {
+            display: none;
+        }
+        
     }
 
     .bar {

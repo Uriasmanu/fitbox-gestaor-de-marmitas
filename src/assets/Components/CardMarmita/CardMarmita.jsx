@@ -4,7 +4,7 @@ import './_CardMarmitaMobile.scss'
 import PropTypes from 'prop-types';
 
 
-const CardMarmita = ({ id, name, descricao, img }) => {
+const CardMarmita = ({ id, name, descricao, img, isHidden }) => {
     return (
         <div className='container-CardMarmita'>
             <div className="card">
@@ -12,7 +12,7 @@ const CardMarmita = ({ id, name, descricao, img }) => {
                 <div className="card_form">
                     <img src={img} alt={name} />
                 </div>
-                <div className="card_data">
+                <div className={`card_data ${isHidden ? 'hidden' : ''}`}>
                     <div className="data">
                         <div className="text">
                             <label className="text_m">{name}</label>
@@ -36,6 +36,7 @@ CardMarmita.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     descricao: PropTypes.string.isRequired,
-    img: PropTypes.string.isRequired
+    img: PropTypes.string.isRequired,
+    isHidden: PropTypes.bool
 };
 export default CardMarmita;

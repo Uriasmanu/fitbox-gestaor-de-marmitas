@@ -31,8 +31,9 @@ const navegacao = {
 const Home = () => {
   const [sidebarVisivel, setSidebarVisivel] = useState(false);
   const [abaSelecionada, setAbaSelecionada] = useState(null);
-  const [items, setItems] = useState(marmitas); // Usar marmitas diretamente como items
-  const [dropZone, setDropZone] = useState([]);
+  const [items, setItems] = useState(marmitas);
+  const [dropAlmoco, setDropAlmoco] = useState([]);
+  const [dropJantar, setDropJantar] = useState([]);
 
   const onDragStart = (e, fromZone, index) => {
     e.dataTransfer.setData("fromZone", fromZone);
@@ -49,14 +50,33 @@ const Home = () => {
     const fromZone = e.dataTransfer.getData("fromZone");
     const itemIndex = e.dataTransfer.getData("itemIndex");
 
-    if (fromZone === "items" && toZone === "dropZone") {
+    if (fromZone === "items") {
       const item = items[itemIndex];
       setItems(items.filter((_, i) => i !== parseInt(itemIndex)));
-      setDropZone([...dropZone, item]);
-    } else if (fromZone === "dropZone" && toZone === "items") {
-      const item = dropZone[itemIndex];
-      setDropZone(dropZone.filter((_, i) => i !== parseInt(itemIndex)));
-      setItems([...items, item]);
+
+      if (toZone === "almoco") {
+        setDropAlmoco([...dropAlmoco, item]);
+      } else if (toZone === "jantar") {
+        setDropJantar([...dropJantar, item]);
+      }
+    } else if (fromZone === "almoco") {
+      const item = dropAlmoco[itemIndex];
+      setDropAlmoco(dropAlmoco.filter((_, i) => i !== parseInt(itemIndex)));
+
+      if (toZone === "items") {
+        setItems([...items, item]);
+      } else if (toZone === "jantar") {
+        setDropJantar([...dropJantar, item]);
+      }
+    } else if (fromZone === "jantar") {
+      const item = dropJantar[itemIndex];
+      setDropJantar(dropJantar.filter((_, i) => i !== parseInt(itemIndex)));
+
+      if (toZone === "items") {
+        setItems([...items, item]);
+      } else if (toZone === "almoco") {
+        setDropAlmoco([...dropAlmoco, item]);
+      }
     }
   };
 
@@ -95,51 +115,53 @@ const Home = () => {
           ))}
         </div>
 
-        <div>
-          {/* Lista de Marmitas */}
-          <div
-            className="container-cards-marmitas"
-            onDragOver={onDragOver}
-            onDrop={(e) => onDrop(e, "items")}
-          >
-            {items.map((marmita, index) => (
-              <div
-                key={marmita.id}
-                draggable
-                onDragStart={(e) => onDragStart(e, "items", index)}
-                style={{ cursor: "grab" }}
-              >
-                <CardMarmita
-                  id={marmita.id}
-                  name={marmita.name}
-                  descricao={marmita.descricao}
-                  img={marmita.img}
-                />
-              </div>
-            ))}
-          </div>
-
-
+        <div
+          className="container-cards-marmitas"
+          onDragOver={onDragOver}
+          onDrop={(e) => onDrop(e, "items")}
+        >
+          {items.map((marmita, index) => (
+            <div
+              key={marmita.id}
+              draggable
+              onDragStart={(e) => onDragStart(e, "items", index)}
+              style={{ cursor: "grab" }}
+            >
+              <CardMarmita
+                id={marmita.id}
+                name={marmita.name}
+                descricao={marmita.descricao}
+                img={marmita.img}
+                isHidden={false}
+              />
+            </div>
+          ))}
         </div>
       </main>
+
       <section className="container-rightBar">
         <div className="topo">
           <ComponenteNotificacao />
-          {/* Área de Drop */}
-          
         </div>
-        <h3>Monte suas refeições</h3>
-        <ComponeteDia/>
-        <div
+
+        <div className="chamada-right">
+          <h3>Monte suas refeições</h3>
+          <ComponeteDia />
+        </div>
+
+        {/* Área de Drop para Almoço */}
+        <div className="conatainer-drop-1">
+          <h3>Almoço</h3>
+          <div
             className="drop"
             onDragOver={onDragOver}
-            onDrop={(e) => onDrop(e, "dropZone")}
+            onDrop={(e) => onDrop(e, "almoco")}
           >
-            {dropZone.map((marmita, index) => (
+            {dropAlmoco.map((marmita, index) => (
               <div
                 key={marmita.id}
                 draggable
-                onDragStart={(e) => onDragStart(e, "dropZone", index)}
+                onDragStart={(e) => onDragStart(e, "almoco", index)}
                 style={{ cursor: "grab" }}
               >
                 <CardMarmita
@@ -147,11 +169,41 @@ const Home = () => {
                   name={marmita.name}
                   descricao={marmita.descricao}
                   img={marmita.img}
+                  isHidden={true}
                 />
               </div>
             ))}
           </div>
+        </div>
+
+        {/* Área de Drop para Jantar */}
+        <div className="conatainer-drop">
+          <h3>Jantar</h3>
+          <div
+            className="drop"
+            onDragOver={onDragOver}
+            onDrop={(e) => onDrop(e, "jantar")}
+          >
+            {dropJantar.map((marmita, index) => (
+              <div
+                key={marmita.id}
+                draggable
+                onDragStart={(e) => onDragStart(e, "jantar", index)}
+                style={{ cursor: "grab" }}
+              >
+                <CardMarmita
+                  id={marmita.id}
+                  name={marmita.name}
+                  descricao={marmita.descricao}
+                  img={marmita.img}
+                  isHidden={true}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
+
       <footer>
         {/* Footer content */}
       </footer>
