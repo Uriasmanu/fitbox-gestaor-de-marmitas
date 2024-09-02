@@ -141,13 +141,13 @@ const Home = () => {
         </div>
 
         <div className="chamada-right">
-          <h3>Monte suas refeições</h3>
+          <h4>Monte suas refeições</h4>
           <ComponeteDia />
         </div>
 
         {/* Área de Drop para Almoço */}
         <div className="conatainer-drop-1">
-          <h3>Almoço</h3>
+          <h4>Almoço</h4>
           <div
             className="drop"
             onDragOver={onDragOver}
@@ -174,7 +174,7 @@ const Home = () => {
 
         {/* Área de Drop para Jantar */}
         <div className="conatainer-drop">
-          <h3>Jantar</h3>
+          <h4>Jantar</h4>
           <div
             className="drop"
             onDragOver={onDragOver}
