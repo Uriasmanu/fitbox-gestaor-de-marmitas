@@ -14,6 +14,7 @@ import CardMarmita from "../../Components/CardMarmita/CardMarmita";
 import ComponenteNotificacao from "../../Components/ComponenteNotificacao/ComponenteNotificacao";
 
 import data from '../../JSONs/Marmitas.json';
+import ComponeteDia from "../../Components/ComponeteDia/ComponeteDia";
 
 const marmitas = data.Marmitas;
 
@@ -93,12 +94,11 @@ const Home = () => {
             />
           ))}
         </div>
-        
-        <div style={{ display: 'flex', gap: '20px' }}>
+
+        <div>
           {/* Lista de Marmitas */}
           <div
             className="container-cards-marmitas"
-            style={{ padding: "10px", border: "1px solid black", width: "200px" }}
             onDragOver={onDragOver}
             onDrop={(e) => onDrop(e, "items")}
           >
@@ -119,21 +119,19 @@ const Home = () => {
             ))}
           </div>
 
-          
+
         </div>
       </main>
       <section className="container-rightBar">
         <div className="topo">
           <ComponenteNotificacao />
           {/* Área de Drop */}
-          <div
-            style={{
-              padding: "10px",
-              border: "1px solid black",
-              width: "200px",
-              minHeight: "100px",
-              background: "lightgray"
-            }}
+          
+        </div>
+        <h3>Monte suas refeições</h3>
+        <ComponeteDia/>
+        <div
+            className="drop"
             onDragOver={onDragOver}
             onDrop={(e) => onDrop(e, "dropZone")}
           >
@@ -153,7 +151,6 @@ const Home = () => {
               </div>
             ))}
           </div>
-        </div>
       </section>
       <footer>
         {/* Footer content */}
