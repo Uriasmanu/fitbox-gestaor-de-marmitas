@@ -50,33 +50,25 @@ const Home = () => {
     const fromZone = e.dataTransfer.getData("fromZone");
     const itemIndex = e.dataTransfer.getData("itemIndex");
 
+    let item;
+
     if (fromZone === "items") {
-      const item = items[itemIndex];
+      item = items[itemIndex];
       setItems(items.filter((_, i) => i !== parseInt(itemIndex)));
-
-      if (toZone === "almoco") {
-        setDropAlmoco([...dropAlmoco, item]);
-      } else if (toZone === "jantar") {
-        setDropJantar([...dropJantar, item]);
-      }
     } else if (fromZone === "almoco") {
-      const item = dropAlmoco[itemIndex];
+      item = dropAlmoco[itemIndex];
       setDropAlmoco(dropAlmoco.filter((_, i) => i !== parseInt(itemIndex)));
-
-      if (toZone === "items") {
-        setItems([...items, item]);
-      } else if (toZone === "jantar") {
-        setDropJantar([...dropJantar, item]);
-      }
     } else if (fromZone === "jantar") {
-      const item = dropJantar[itemIndex];
+      item = dropJantar[itemIndex];
       setDropJantar(dropJantar.filter((_, i) => i !== parseInt(itemIndex)));
+    }
 
-      if (toZone === "items") {
-        setItems([...items, item]);
-      } else if (toZone === "almoco") {
-        setDropAlmoco([...dropAlmoco, item]);
-      }
+    if (toZone === "items") {
+      setItems(prevItems => [...prevItems, item]);
+    } else if (toZone === "almoco") {
+      setDropAlmoco(prevDrop => [...prevDrop, item]);
+    } else if (toZone === "jantar") {
+      setDropJantar(prevDrop => [...prevDrop, item]);
     }
   };
 
@@ -203,10 +195,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-      <footer>
-        {/* Footer content */}
-      </footer>
     </div>
   );
 };
