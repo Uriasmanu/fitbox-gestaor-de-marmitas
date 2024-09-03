@@ -1,8 +1,29 @@
 .RegistrosMarmitas {
-    display: flex;
     width: 100vw;
     height: 100vh;
-    /* From Uiverse.io by Praashoo7 */
+    box-sizing: border-box;
+    display: flex;
+
+    .botaoMenu {
+        display: none;
+    }
+
+    .sideBar {
+        top: 0;
+        width: 25vw;
+        height: 100vh;
+        background-color: #fff;
+        z-index: 1;
+        transition: left 0.4s ease-in-out;
+
+        &.visivel {
+            left: 0;
+        }
+
+        &.invisivel {
+            left: -100%;
+        }
+    }
 
     main {
         display: flex;
