@@ -4,7 +4,7 @@ import './_CardMarmitaMobile.scss'
 import PropTypes from 'prop-types';
 
 
-const CardMarmita = ({ id, name, descricao, img, isHidden }) => {
+const CardMarmita = ({ id, name, descricao, img, isHidden, onToggleFavoritar, isFavorited }) => {
     return (
         <div className='container-CardMarmita'>
             <div className="card">
@@ -25,7 +25,10 @@ const CardMarmita = ({ id, name, descricao, img, isHidden }) => {
                             </label>
                         </div>
                     </div>
-                    <BotaoFavoritar />
+                    <BotaoFavoritar 
+                        isFavorited={isFavorited}
+                        onClick={() => onToggleFavoritar(id)} 
+                    />
                 </div>
             </div>
         </div>
@@ -37,6 +40,8 @@ CardMarmita.propTypes = {
     name: PropTypes.string.isRequired,
     descricao: PropTypes.string.isRequired,
     img: PropTypes.string.isRequired,
-    isHidden: PropTypes.bool
+    isHidden: PropTypes.bool,
+    onToggleFavoritar: PropTypes.func.isRequired,
+    isFavorited: PropTypes.bool.isRequired
 };
 export default CardMarmita;

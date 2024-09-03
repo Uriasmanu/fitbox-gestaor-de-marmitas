@@ -7,32 +7,35 @@ import Login from './assets/Pages/Login/Login';
 import { AuthProvider } from './assets/context/AuthContext';
 import ProtectedRoute from './assets/Components/ProtectedRoute/ProtectedRoute';
 import RegistrosMarmitas from './assets/Pages/RegistrosMarmitas/RegistrosMarmitas';
+import { DragDropProvider } from './assets/context/DragDropContext';
 
 function App() {
   return (
     <AuthProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route 
-            path="/home" 
-            element={
-              <ProtectedRoute>
-                <Home />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/registrosMarmitas" 
-            element={
-              <ProtectedRoute>
-                <RegistrosMarmitas />
-              </ProtectedRoute>
-            } 
-          />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Router>
+      <DragDropProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route
+              path="/home"
+              element={
+                <ProtectedRoute>
+                  <Home />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/registrosMarmitas"
+              element={
+                <ProtectedRoute>
+                  <RegistrosMarmitas />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Router>
+      </DragDropProvider>
     </AuthProvider>
   );
 }
