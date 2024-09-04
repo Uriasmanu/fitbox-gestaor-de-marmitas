@@ -1,4 +1,6 @@
 import './_ComponenteLoading.scss'
+import './_ComponenteLoadingMobile.scss'
+
 
 const ComponenteLoading = () => {
     return (
