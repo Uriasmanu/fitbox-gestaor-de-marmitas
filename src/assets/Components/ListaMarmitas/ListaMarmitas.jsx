@@ -1,13 +1,13 @@
 import './_ListaMarmitas.scss';
 import CardMarmita from "../../Components/CardMarmita/CardMarmita";
 import { useDragDrop } from '../../context/DragDropContext';
-
 import data from '../../JSONs/Marmitas.json';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 const marmitas = data.Marmitas;
 
-const ListaMarmitas = ({  toggleFavoritar, favoritedMarmitas }) => {
+const ListaMarmitas = ({ toggleFavoritar, favoritedMarmitas }) => {
   const [items, setItems] = useState(marmitas);
   const {
     onDragStart,
@@ -26,11 +26,10 @@ const ListaMarmitas = ({  toggleFavoritar, favoritedMarmitas }) => {
       onDragOver={onDragOver}
       onDrop={handleDrop}
       onTouchStart={(e) => handleTouchStart(e, "items")}
-      onTouchMove={(e) => handleTouchMove(e, () => {})} // Ajuste o handleTouchMove como necessário
+      onTouchMove={(e) => handleTouchMove(e, () => {})} 
       onTouchEnd={handleTouchEnd}
-      
     >
-      {items.map((marmita, index) => (
+      {items.map((marmita) => (
         <div
           key={marmita.id}
           draggable
@@ -44,12 +43,17 @@ const ListaMarmitas = ({  toggleFavoritar, favoritedMarmitas }) => {
             img={marmita.img}
             isHidden={false}
             onToggleFavoritar={toggleFavoritar}
-            isFavorited={favoritedMarmitas.has(marmita.id)}
+            isFavorited={favoritedMarmitas(marmita.id)}
           />
         </div>
       ))}
     </div>
   );
+};
+
+ListaMarmitas.propTypes = {
+  toggleFavoritar: PropTypes.func.isRequired,
+  favoritedMarmitas: PropTypes.func.isRequired,
 };
 
 export default ListaMarmitas;

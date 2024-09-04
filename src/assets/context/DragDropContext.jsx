@@ -1,4 +1,5 @@
 import { createContext, useState, useContext } from 'react';
+import PropTypes from 'prop-types'
 
 // Cria o contexto
 const DragDropContext = createContext();
@@ -61,6 +62,10 @@ export const DragDropProvider = ({ children }) => {
       {children}
     </DragDropContext.Provider>
   );
+};
+
+DragDropProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 // Hook para usar o contexto
