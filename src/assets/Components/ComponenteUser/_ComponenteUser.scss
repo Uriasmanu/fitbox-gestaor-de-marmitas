@@ -58,6 +58,7 @@
   display: inline-block;
   text-rendering: optimizeLegibility;
   position: relative;
+  
 }
 
 .popup input {
@@ -65,6 +66,7 @@
 }
 
 .burger {
+  
   display: flex;
   position: relative;
   align-items: center;
@@ -79,6 +81,8 @@
   transition: var(--burger-transition);
   outline: var(--burger-enable-outline-width) solid transparent;
   outline-offset: 0;
+  width: 35px;
+    height: 35px;
 }
 
 .popup-window {

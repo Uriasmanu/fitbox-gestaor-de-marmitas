@@ -2,10 +2,10 @@
 .botaoEnviar {
   button {
     font-family: inherit;
-    font-size: 18px;
+    font-size: 14px;
     background: #fdf0c6;
     color: #0c1e35;
-    padding: 0.8em 1.2em;
+    padding: 0.7em 1.1em;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -52,8 +52,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     background-color: rgba(255, 255, 255, 0.2);
     transition: all 0.3s;
@@ -61,8 +61,8 @@
 
   button:hover .svg-wrapper {
     background-color: #fdf0c6;
-    width: 54px;
-    height: 54px;
+    width: 44px;
+    height: 44px;
   }
 
   button:hover svg {

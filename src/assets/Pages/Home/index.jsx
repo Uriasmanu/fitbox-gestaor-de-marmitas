@@ -164,7 +164,7 @@ const Home = () => {
         </div>
         <div className="chamada-right">
           <h4>Monte suas refeições</h4>
-          <ComponeteDia/>
+          <ComponeteDia />
         </div>
         <div className="conatainer-drop-1">
           <h4>Almoço</h4>
@@ -217,9 +217,16 @@ const Home = () => {
                   isFavorited={favoritedIds.includes(marmita.id)}
                 />
               </div>
-            ))}            
+            ))}
           </div>
-          <BotaoEnviar/>
+          <div className="botao-enviar">
+            <BotaoEnviar />
+          </div>
+
+        </div>
+
+        <div>
+          <h4>Marmitas em estoque</h4>
         </div>
       </section>
     </div>

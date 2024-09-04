@@ -1,3 +1,5 @@
+import './_ComponeteDia.scss'
+
 const ComponeteDia = () =>{
     const dataAtual = new Date();
 

@@ -9,8 +9,8 @@ const ComponenteUser = () => {
                 <svg
                     viewBox="0 0 24 24"
                     fill="#0c1e35"
-                    height="20"
-                    width="20"
+                    height="15"
+                    width="15"
                     xmlns="http://www.w3.org/2000/svg"
                 >
                     <path
