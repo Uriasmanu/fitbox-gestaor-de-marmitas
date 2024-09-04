@@ -15,6 +15,7 @@ import iconeReceita from '../../Image/receita.svg';
 import './_inicio.scss';
 import './_inicioMobile.scss';
 import ComponeteDia from "../../Components/ComponeteDia/ComponeteDia";
+import EstoqueContador from "../../Components/EstoqueContador/EstoqueContador";
 
 const Home = () => {
   const [sidebarVisivel, setSidebarVisivel] = useState(false);
@@ -227,6 +228,10 @@ const Home = () => {
 
         <div>
           <h4>Marmitas em estoque</h4>
+
+          <div className="estoque">
+            <EstoqueContador/>
+          </div>
         </div>
       </section>
     </div>
