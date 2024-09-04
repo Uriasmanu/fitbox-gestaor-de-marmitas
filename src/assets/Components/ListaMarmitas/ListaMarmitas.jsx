@@ -2,7 +2,13 @@ import './_ListaMarmitas.scss';
 import CardMarmita from "../../Components/CardMarmita/CardMarmita";
 import { useDragDrop } from '../../context/DragDropContext';
 
-const ListaMarmitas = ({ items, toggleFavoritar, favoritedMarmitas }) => {
+import data from '../../JSONs/Marmitas.json';
+import { useState } from 'react';
+
+const marmitas = data.Marmitas;
+
+const ListaMarmitas = ({  toggleFavoritar, favoritedMarmitas }) => {
+  const [items, setItems] = useState(marmitas);
   const {
     onDragStart,
     onDragOver,
@@ -10,7 +16,6 @@ const ListaMarmitas = ({ items, toggleFavoritar, favoritedMarmitas }) => {
     handleTouchStart,
     handleTouchMove,
     handleTouchEnd,
-    rightBarVisible
   } = useDragDrop();
 
   const handleDrop = (e) => onDrop(e, "items");
@@ -23,7 +28,7 @@ const ListaMarmitas = ({ items, toggleFavoritar, favoritedMarmitas }) => {
       onTouchStart={(e) => handleTouchStart(e, "items")}
       onTouchMove={(e) => handleTouchMove(e, () => {})} // Ajuste o handleTouchMove como necessário
       onTouchEnd={handleTouchEnd}
-      style={{ marginRight: rightBarVisible ? '300px' : '0' }}
+      
     >
       {items.map((marmita, index) => (
         <div

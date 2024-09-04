@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { useDragDrop } from '../../context/DragDropContext';
+import { useState, useRef } from "react";
 import BotaoMenu from "../../Components/BotaoMenu/BotaoMenu";
 import Sidebar from "../../Components/Sidebar";
 import BotaoNavegacao from "../../Components/BotaoNavegar/BotaoNavegar";
@@ -13,10 +12,13 @@ import iconeReceita from '../../Image/receita.svg';
 import CardMarmita from "../../Components/CardMarmita/CardMarmita";
 import ComponenteNotificacao from "../../Components/ComponenteNotificacao/ComponenteNotificacao";
 import data from '../../JSONs/Marmitas.json';
+
+
 import ComponenteUser from "../../Components/ComponenteUser/ComponenteUser";
 import BotaoEnviar from "../../Components/BotaoEnviar/BotaoEnviar";
 import ComponeteDia from './../../Components/ComponeteDia/ComponeteDia';
 import ListaMarmitas from "../../Components/ListaMarmitas/ListaMarmitas";
+
 
 const marmitas = data.Marmitas;
 
@@ -37,38 +39,70 @@ const Home = () => {
   const [dropAlmoco, setDropAlmoco] = useState([]);
   const [dropJantar, setDropJantar] = useState([]);
   const [rightBarVisible, setRightBarVisible] = useState(false);
-  const [favoritedMarmitas, setFavoritedMarmitas] = useState(new Set());
+  const [startX, setStartX] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
 
-  const {
-    handleTouchStart,
-    handleTouchMove,
-    handleTouchEnd,
-    onDragStart,
-    onDragOver,
-    onDrop
-  } = useDragDrop();
+  const containerRightBarRef = useRef(null);
 
-  const toggleFavoritar = (id) => {
-    setFavoritedMarmitas(prev => {
-      const newFavorited = new Set(prev);
-      if (newFavorited.has(id)) {
-        newFavorited.delete(id);
-      } else {
-        newFavorited.add(id);
-      }
-      return newFavorited;
-    });
+  // Funções de arrasto para o main
+  const handleTouchStartMain = (e) => {
+    setStartX(e.touches[0].clientX);
+    setIsDragging(true);
   };
 
-  const controleSidebar = () => {
-    setSidebarVisivel(!sidebarVisivel);
+  const handleTouchMoveMain = (e) => {
+    if (!isDragging) return;
+
+    const endX = e.touches[0].clientX;
+    const deltaX = endX - startX;
+
+    // Detecta arrasto para a esquerda
+    if (deltaX < -100) { // Ajuste a sensibilidade conforme necessário
+      setRightBarVisible(true);
+    }
   };
 
-  const handleSelecaoAba = (index) => {
-    setAbaSelecionada(index);
+  const handleTouchEndMain = () => {
+    setIsDragging(false);
   };
 
-  const updateLists = (fromZone, toZone, itemIndex) => {
+  // Funções de arrasto para o containerRightBar
+  const handleTouchStartRightBar = (e) => {
+    setStartX(e.touches[0].clientX);
+    setIsDragging(true);
+  };
+
+  const handleTouchMoveRightBar = (e) => {
+    if (!isDragging) return;
+
+    const endX = e.touches[0].clientX;
+    const deltaX = endX - startX;
+
+    // Detecta arrasto para a direita
+    if (deltaX > 100) { // Ajuste a sensibilidade conforme necessário
+      setRightBarVisible(false);
+    }
+  };
+
+  const handleTouchEndRightBar = () => {
+    setIsDragging(false);
+  };
+
+  const onDragStart = (e, fromZone, index) => {
+    e.dataTransfer.setData("fromZone", fromZone);
+    e.dataTransfer.setData("itemIndex", index);
+  };
+
+  const onDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const onDrop = (e, toZone) => {
+    e.preventDefault();
+
+    const fromZone = e.dataTransfer.getData("fromZone");
+    const itemIndex = e.dataTransfer.getData("itemIndex");
+
     let item;
 
     if (fromZone === "items") {
@@ -91,6 +125,14 @@ const Home = () => {
     }
   };
 
+  const controleSidebar = () => {
+    setSidebarVisivel(!sidebarVisivel);
+  };
+
+  const handleSelecaoAba = (index) => {
+    setAbaSelecionada(index);
+  };
+
   return (
     <div className="containerHome">
       <div className="botaoMenu">
@@ -107,6 +149,7 @@ const Home = () => {
         </div>
 
         <div className="navegacao">
+
           {navegacao.abas.map((aba, index) => (
             <BotaoNavegacao
               key={index}
@@ -115,21 +158,30 @@ const Home = () => {
               selecionado={abaSelecionada === index}
               onClick={() => handleSelecaoAba(index)}
             />
+
           ))}
+
         </div>
 
-        <ListaMarmitas
-          items={items}
-          toggleFavoritar={toggleFavoritar}
-          favoritedMarmitas={favoritedMarmitas}
-        />
+        <div
+          className="container-visualizar"
+          onDragOver={onDragOver}
+          onDrop={(e) => onDrop(e, "items")}
+          onTouchStart={handleTouchStartMain}
+          onTouchMove={handleTouchMoveMain}
+          onTouchEnd={handleTouchEndMain}
+          style={{ marginRight: rightBarVisible ? '300px' : '0' }}
+        >
+         <ListaMarmitas/>
+        </div>
       </main>
 
       <section
         className={`container-rightBar ${rightBarVisible ? 'slide-in' : ''}`}
-        onTouchStart={(e) => handleTouchStart(e, "rightBar")}
-        onTouchMove={(e) => handleTouchMove(e, () => {})} // Ajuste o handleTouchMove como necessário
-        onTouchEnd={handleTouchEnd}
+        ref={containerRightBarRef}
+        onTouchStart={handleTouchStartRightBar}
+        onTouchMove={handleTouchMoveRightBar}
+        onTouchEnd={handleTouchEndRightBar}
       >
         <div className="topo">
           <ComponenteUser />
@@ -146,13 +198,13 @@ const Home = () => {
           <div
             className="drop"
             onDragOver={onDragOver}
-            onDrop={(e) => onDrop(e, "almoco", updateLists)}
+            onDrop={(e) => onDrop(e, "almoco")}
           >
             {dropAlmoco.map((marmita, index) => (
               <div
                 key={marmita.id}
                 draggable
-                onDragStart={(e) => onDragStart(e, marmita, "almoco")}
+                onDragStart={(e) => onDragStart(e, "almoco", index)}
                 style={{ cursor: "grab" }}
               >
                 <CardMarmita
@@ -172,13 +224,13 @@ const Home = () => {
           <div
             className="drop"
             onDragOver={onDragOver}
-            onDrop={(e) => onDrop(e, "jantar", updateLists)}
+            onDrop={(e) => onDrop(e, "jantar")}
           >
             {dropJantar.map((marmita, index) => (
               <div
                 key={marmita.id}
                 draggable
-                onDragStart={(e) => onDragStart(e, marmita, "jantar")}
+                onDragStart={(e) => onDragStart(e, "jantar", index)}
                 style={{ cursor: "grab" }}
               >
                 <CardMarmita

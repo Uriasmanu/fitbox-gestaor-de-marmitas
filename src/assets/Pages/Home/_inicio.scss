@@ -41,22 +41,23 @@
 
     }
 
-    .container-cards-marmitas {
+    .container-visualizar {
       margin-top: 5%;
-      gap: 20px;
+      width: 65%;
       height: 100%;
-      display: flex;
-      flex-direction: column;
+
     }
   }
   .container-rightBar {
     box-sizing: border-box;
     height: 100%;
     width: 20vw;
-    padding: 3% 4%;
+    padding: 3% 2%;
     border-left: solid #fdf0c6 3px;
     display: flex;
     flex-direction: column;
+    position: fixed;
+    right: 3%;
 
     .topo {
       width: 100%;

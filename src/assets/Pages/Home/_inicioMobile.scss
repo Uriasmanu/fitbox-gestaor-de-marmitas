@@ -37,7 +37,14 @@
       display: flex;
       z-index: 0;
       margin-top: 20%;
-      position: relative; // Adicionado para garantir que o toque seja capturado corretamente
+      position: relative; 
+
+      .container-visualizar {
+        margin-top: 5%;
+        width: 100%;
+        height: 100%;
+  
+      }
 
       .navegacao {
         display: flex;
