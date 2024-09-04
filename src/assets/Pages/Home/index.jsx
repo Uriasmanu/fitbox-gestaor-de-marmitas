@@ -17,6 +17,7 @@ import data from '../../JSONs/Marmitas.json';
 import ComponenteUser from "../../Components/ComponenteUser/ComponenteUser";
 import BotaoEnviar from "../../Components/BotaoEnviar/BotaoEnviar";
 import ComponeteDia from './../../Components/ComponeteDia/ComponeteDia';
+import ListaMarmitas from "../../Components/ListaMarmitas/ListaMarmitas";
 
 
 const marmitas = data.Marmitas;
@@ -171,22 +172,7 @@ const Home = () => {
           onTouchEnd={handleTouchEndMain}
           style={{ marginRight: rightBarVisible ? '300px' : '0' }}
         >
-          {items.map((marmita, index) => (
-            <div
-              key={marmita.id}
-              draggable
-              onDragStart={(e) => onDragStart(e, "items", index)}
-              style={{ cursor: "grab" }}
-            >
-              <CardMarmita
-                id={marmita.id}
-                name={marmita.name}
-                descricao={marmita.descricao}
-                img={marmita.img}
-                isHidden={false}
-              />
-            </div>
-          ))}
+          <ListaMarmitas/>
         </div>
       </main>
 
