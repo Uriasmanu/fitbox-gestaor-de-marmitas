@@ -7,12 +7,12 @@ import Login from './assets/Pages/Login/Login';
 import { AuthProvider } from './assets/context/AuthContext';
 import ProtectedRoute from './assets/Components/ProtectedRoute/ProtectedRoute';
 import RegistrosMarmitas from './assets/Pages/RegistrosMarmitas/RegistrosMarmitas';
-import { DragDropProvider } from './assets/context/DragDropContext';
+
 
 function App() {
   return (
     <AuthProvider>
-      <DragDropProvider>
+
         <Router>
           <Routes>
             <Route path="/" element={<Login />} />
@@ -35,7 +35,7 @@ function App() {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Router>
-      </DragDropProvider>
+
     </AuthProvider>
   );
 }

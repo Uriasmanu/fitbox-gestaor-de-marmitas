@@ -2,40 +2,24 @@ import { useState, useRef } from "react";
 import BotaoMenu from "../../Components/BotaoMenu/BotaoMenu";
 import Sidebar from "../../Components/Sidebar";
 import BotaoNavegacao from "../../Components/BotaoNavegar/BotaoNavegar";
-import './_inicio.scss';
-import './_inicioMobile.scss';
+import CardMarmita from "../../Components/CardMarmita/CardMarmita";
+import ComponenteNotificacao from "../../Components/ComponenteNotificacao/ComponenteNotificacao";
+import ComponenteUser from "../../Components/ComponenteUser/ComponenteUser";
+import BotaoEnviar from "../../Components/BotaoEnviar/BotaoEnviar";
+import data from '../../JSONs/Marmitas.json';
 import iconeMarmita from '../../Image/marmita.svg';
 import iconeFavoritar from '../../Image/favoritar.svg';
 import iconeConsumidas from '../../Image/consumidas.svg';
 import iconeHistorico from '../../Image/historico.svg';
 import iconeReceita from '../../Image/receita.svg';
-import CardMarmita from "../../Components/CardMarmita/CardMarmita";
-import ComponenteNotificacao from "../../Components/ComponenteNotificacao/ComponenteNotificacao";
-import data from '../../JSONs/Marmitas.json';
-
-
-import ComponenteUser from "../../Components/ComponenteUser/ComponenteUser";
-import BotaoEnviar from "../../Components/BotaoEnviar/BotaoEnviar";
-import ComponeteDia from './../../Components/ComponeteDia/ComponeteDia';
-import ListaMarmitas from "../../Components/ListaMarmitas/ListaMarmitas";
-
-
-const marmitas = data.Marmitas;
-
-const navegacao = {
-  abas: [
-    { label: "Marmita", icon: iconeMarmita },
-    { label: "Favoritar", icon: iconeFavoritar },
-    { label: "Consumidas", icon: iconeConsumidas },
-    { label: "Histórico", icon: iconeHistorico },
-    { label: "Receita", icon: iconeReceita }
-  ]
-};
+import './_inicio.scss';
+import './_inicioMobile.scss';
+import ComponeteDia from "../../Components/ComponeteDia/ComponeteDia";
 
 const Home = () => {
   const [sidebarVisivel, setSidebarVisivel] = useState(false);
   const [abaSelecionada, setAbaSelecionada] = useState(null);
-  const [items, setItems] = useState(marmitas);
+  const [items, setItems] = useState(data.Marmitas);
   const [dropAlmoco, setDropAlmoco] = useState([]);
   const [dropJantar, setDropJantar] = useState([]);
   const [rightBarVisible, setRightBarVisible] = useState(false);
@@ -44,65 +28,33 @@ const Home = () => {
 
   const containerRightBarRef = useRef(null);
 
-  // Funções de arrasto para o main
-  const handleTouchStartMain = (e) => {
+  // Funções de arrasto e toque
+  const handleTouchStart = (e, direction) => {
     setStartX(e.touches[0].clientX);
     setIsDragging(true);
   };
 
-  const handleTouchMoveMain = (e) => {
+  const handleTouchMove = (e, direction) => {
     if (!isDragging) return;
-
     const endX = e.touches[0].clientX;
     const deltaX = endX - startX;
-
-    // Detecta arrasto para a esquerda
-    if (deltaX < -100) { // Ajuste a sensibilidade conforme necessário
-      setRightBarVisible(true);
-    }
+    if (direction === 'main' && deltaX < -100) setRightBarVisible(true);
+    if (direction === 'rightBar' && deltaX > 100) setRightBarVisible(false);
   };
 
-  const handleTouchEndMain = () => {
-    setIsDragging(false);
-  };
-
-  // Funções de arrasto para o containerRightBar
-  const handleTouchStartRightBar = (e) => {
-    setStartX(e.touches[0].clientX);
-    setIsDragging(true);
-  };
-
-  const handleTouchMoveRightBar = (e) => {
-    if (!isDragging) return;
-
-    const endX = e.touches[0].clientX;
-    const deltaX = endX - startX;
-
-    // Detecta arrasto para a direita
-    if (deltaX > 100) { // Ajuste a sensibilidade conforme necessário
-      setRightBarVisible(false);
-    }
-  };
-
-  const handleTouchEndRightBar = () => {
-    setIsDragging(false);
-  };
+  const handleTouchEnd = () => setIsDragging(false);
 
   const onDragStart = (e, fromZone, index) => {
     e.dataTransfer.setData("fromZone", fromZone);
     e.dataTransfer.setData("itemIndex", index);
   };
 
-  const onDragOver = (e) => {
-    e.preventDefault();
-  };
+  const onDragOver = (e) => e.preventDefault();
 
   const onDrop = (e, toZone) => {
     e.preventDefault();
-
     const fromZone = e.dataTransfer.getData("fromZone");
     const itemIndex = e.dataTransfer.getData("itemIndex");
-
     let item;
 
     if (fromZone === "items") {
@@ -125,12 +77,18 @@ const Home = () => {
     }
   };
 
-  const controleSidebar = () => {
-    setSidebarVisivel(!sidebarVisivel);
-  };
+  const controleSidebar = () => setSidebarVisivel(!sidebarVisivel);
 
-  const handleSelecaoAba = (index) => {
-    setAbaSelecionada(index);
+  const handleSelecaoAba = (index) => setAbaSelecionada(index);
+
+  const [favoritedIds, setFavoritedIds] = useState([]);
+
+  const toggleFavoritar = (id) => {
+    setFavoritedIds(prevIds =>
+      prevIds.includes(id)
+        ? prevIds.filter(favoritedId => favoritedId !== id)
+        : [...prevIds, id]
+    );
   };
 
   return (
@@ -147,10 +105,14 @@ const Home = () => {
         <div className="titulo">
           <h2>Qual é a escolha saudável de hoje?</h2>
         </div>
-
         <div className="navegacao">
-
-          {navegacao.abas.map((aba, index) => (
+          {[
+            { label: "Marmita", icon: iconeMarmita },
+            { label: "Favoritar", icon: iconeFavoritar },
+            { label: "Consumidas", icon: iconeConsumidas },
+            { label: "Histórico", icon: iconeHistorico },
+            { label: "Receita", icon: iconeReceita }
+          ].map((aba, index) => (
             <BotaoNavegacao
               key={index}
               icone={aba.icon}
@@ -158,41 +120,52 @@ const Home = () => {
               selecionado={abaSelecionada === index}
               onClick={() => handleSelecaoAba(index)}
             />
-
           ))}
-
         </div>
-
         <div
           className="container-visualizar"
           onDragOver={onDragOver}
           onDrop={(e) => onDrop(e, "items")}
-          onTouchStart={handleTouchStartMain}
-          onTouchMove={handleTouchMoveMain}
-          onTouchEnd={handleTouchEndMain}
+          onTouchStart={(e) => handleTouchStart(e, 'main')}
+          onTouchMove={(e) => handleTouchMove(e, 'main')}
+          onTouchEnd={handleTouchEnd}
           style={{ marginRight: rightBarVisible ? '300px' : '0' }}
         >
-          <ListaMarmitas/>
+          {items.map((marmita, index) => (
+            <div
+              key={marmita.id}
+              draggable
+              onDragStart={(e) => onDragStart(e, "items", index)}
+              style={{ cursor: "grab" }}
+            >
+              <CardMarmita
+                id={marmita.id}
+                name={marmita.name}
+                descricao={marmita.descricao}
+                img={marmita.img}
+                isHidden={false}
+                onToggleFavoritar={toggleFavoritar}
+                isFavorited={favoritedIds.includes(marmita.id)}
+              />
+            </div>
+          ))}
         </div>
       </main>
-
       <section
         className={`container-rightBar ${rightBarVisible ? 'slide-in' : ''}`}
         ref={containerRightBarRef}
-        onTouchStart={handleTouchStartRightBar}
-        onTouchMove={handleTouchMoveRightBar}
-        onTouchEnd={handleTouchEndRightBar}
+        onTouchStart={(e) => handleTouchStart(e, 'rightBar')}
+        onTouchMove={(e) => handleTouchMove(e, 'rightBar')}
+        onTouchEnd={handleTouchEnd}
       >
         <div className="topo">
           <ComponenteUser />
           <ComponenteNotificacao />
         </div>
-
         <div className="chamada-right">
           <h4>Monte suas refeições</h4>
-          <ComponeteDia />
+          <ComponeteDia/>
         </div>
-
         <div className="conatainer-drop-1">
           <h4>Almoço</h4>
           <div
@@ -212,14 +185,15 @@ const Home = () => {
                   name={marmita.name}
                   descricao={marmita.descricao}
                   img={marmita.img}
-                  isHidden={true}
+                  isHidden={false}
+                  onToggleFavoritar={toggleFavoritar}
+                  isFavorited={favoritedIds.includes(marmita.id)}
                 />
               </div>
             ))}
           </div>
         </div>
-
-        <div className="conatainer-drop">
+        <div className="conatainer-drop-2">
           <h4>Jantar</h4>
           <div
             className="drop"
@@ -238,15 +212,14 @@ const Home = () => {
                   name={marmita.name}
                   descricao={marmita.descricao}
                   img={marmita.img}
-                  isHidden={true}
+                  isHidden={false}
+                  onToggleFavoritar={toggleFavoritar}
+                  isFavorited={favoritedIds.includes(marmita.id)}
                 />
               </div>
-            ))}
+            ))}            
           </div>
-        </div>
-
-        <div className="container-botao-enviar">
-          <BotaoEnviar />
+          <BotaoEnviar/>
         </div>
       </section>
     </div>
