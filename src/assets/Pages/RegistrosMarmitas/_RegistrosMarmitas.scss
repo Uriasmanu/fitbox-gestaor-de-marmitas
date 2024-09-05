@@ -18,6 +18,7 @@
 
         &.visivel {
             left: 0;
+            
         }
 
         &.invisivel {
@@ -42,6 +43,44 @@
             transition: .4s ease-in-out;
             box-shadow: rgba(0, 0, 0, 0.4) 1px 2px 2px;
             width: 20rem;
+            
+            input{
+                font-size: 18px;
+            }
+
+            img{
+                width: 20%;
+                height: auto;
+                align-self: center;
+            }
+
+            .ingredientes{
+                display: flex;
+                gap: 10px;
+                width: 100%;
+                box-sizing: border-box;
+
+                input{
+                    width: 100%;
+                    font-size: 20px;
+                }
+            }
+
+            .btn {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-size: 100%;
+                font-weight: bold;
+            }
+
+            .adicionar{
+                background: #3FD7D7;
+            }
+
+            .criar{
+                background: #55A353;
+            }
         }
 
         .form:hover {
@@ -77,7 +116,7 @@
         }
 
         .form .btn {
-            margin-top: 2em;
+            margin-top: 1em;
             align-self: center;
             padding: 0.7em;
             padding-left: 1em;

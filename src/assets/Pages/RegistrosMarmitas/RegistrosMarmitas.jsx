@@ -3,13 +3,16 @@ import Sidebar from '../../Components/Sidebar';
 import './_RegistrosMarmitas.scss'
 import './_RegistrosMarmitasMobile.scss'
 import BotaoMenu from '../../Components/BotaoMenu/BotaoMenu';
+import chef from '../../Image/ChefHat.svg'
+import save from '../../Image/Save.svg'
+import add from '../../Image/Add.svg'
 
 const RegistrosMarmitas = () => {
     const [sidebarVisivel, setSidebarVisivel] = useState(false);
 
     const controleSidebar = () => {
         setSidebarVisivel(!sidebarVisivel);
-      };
+    };
 
     return (
         <div className='RegistrosMarmitas'>
@@ -23,10 +26,21 @@ const RegistrosMarmitas = () => {
             </header>
             <main>
                 <form className="form">
-                    <p className="heading">Login</p>
-                    <input className="input" placeholder="Username" type="text" />
-                    <input className="input" placeholder="Password" type="text" />
-                    <button className="btn">Submit</button>
+                    <img src={chef} alt="icone de chapeu de cozinha" />
+                    <input className="input" placeholder="Nome da marmita" type="text" />
+                    <input className="input" placeholder="Tamanho da vasilha" type="text" />
+                    <div className='ingredientes'>
+                        <input className="input" placeholder="Ingredientes" type="text" />
+                        <input className="input" placeholder="quantidade" type="text" />
+                    </div>
+                    <button className="btn adicionar">
+                        <img src={add} alt="icone de salvar" />
+                        Adicionar ingrediente
+                    </button>
+                    <button className="btn criar">
+                        <img src={save} alt="icone de salvar" />
+                        Criar marmita
+                    </button>
                 </form>
             </main>
         </div>
