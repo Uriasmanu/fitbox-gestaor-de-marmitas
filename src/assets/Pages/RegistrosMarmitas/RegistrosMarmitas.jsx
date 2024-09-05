@@ -19,14 +19,28 @@ const RegistrosMarmitas = () => {
     const controleSidebar = () => {
         setSidebarVisivel(!sidebarVisivel);
     };
+    // Função para traduzir do português para o inglês
+    const traduzirParaIngles = async (texto) => {
+        try {
+            const response = await axios.post('https://api.traducao.com/translate', {
+                text: texto,
+                target_lang: 'en'
+            });
+            return response.data.translatedText;
+        } catch (error) {
+            console.error('Erro ao traduzir:', error);
+            return texto; // Se houver erro na tradução, usa o texto original
+        }
+    };
 
     // Função para buscar ingredientes
     const buscarIngredientes = async (query) => {
         try {
+            const termoTraduzido = await traduzirParaIngles(query);
             const response = await axios.get(`https://api.nal.usda.gov/fdc/v1/foods/search`, {
                 params: {
-                    query: query,
-                    pageSize: 3,
+                    query: termoTraduzido,
+                    pageSize: 10,
                     api_key: 'z8CqFn294O9VRiCN1eM2HZKc6fYiAINDijwwSuB7'
                 }
             });
