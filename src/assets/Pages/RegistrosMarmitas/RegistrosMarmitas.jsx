@@ -87,7 +87,7 @@ const RegistrosMarmitas = () => {
                         <div className='busca'>
                             <input
                                 className="input"
-                                placeholder="Buscar Ingredientes"
+                                placeholder="Ingredientes"
                                 type="text"
                                 value={ingredientePesquisa}
                                 onChange={(e) => setIngredientePesquisa(e.target.value)}
