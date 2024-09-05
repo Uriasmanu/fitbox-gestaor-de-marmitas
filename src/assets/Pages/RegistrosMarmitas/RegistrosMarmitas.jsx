@@ -14,6 +14,7 @@ const RegistrosMarmitas = () => {
     const [ingredientePesquisa, setIngredientePesquisa] = useState('');
     const [ingredientesAdicionados, setIngredientesAdicionados] = useState([]);
     const [tamanhoMarmita, setTamanhoMarmita] = useState('');
+    const [quantidade, setQuantidade] = useState('');
     const [sugestoes, setSugestoes] = useState([]);
 
     const controleSidebar = () => {
@@ -123,13 +124,15 @@ const RegistrosMarmitas = () => {
                             className="input quantidade"
                             placeholder="kg"
                             type="text"
+                            value={quantidade}
+                            onChange={(e) => setQuantidade(e.target.value)}
                         />
-                        
+
                     </div>
                     <button type="button" className="btn adicionar" onClick={adicionarIngrediente}>
-                            <img src={add} alt="ícone de adicionar" />
-                            Adicionar ingrediente
-                        </button>
+                        <img src={add} alt="ícone de adicionar" />
+                        Adicionar ingrediente
+                    </button>
                     <button className="btn criar">
                         <img src={save} alt="ícone de salvar" />
                         Criar marmita
@@ -138,13 +141,13 @@ const RegistrosMarmitas = () => {
 
                 <div className="card">
                     <h3 className="card__title">{nomeMarmita || 'Nome da Marmita'}</h3>
-                    <p>{tamanhoMarmita || 'Tamanho da Marmita'}</p>
+                    <p>{tamanhoMarmita || 'Tamanho da Marmita'} g</p>
                     <p className="card__content">
                         Ingredientes:
                         <ul>
                             {ingredientesAdicionados.map((ingrediente, index) => (
                                 <li key={index}>
-                                    {ingrediente.description} - {ingrediente.quantidade}g
+                                    {ingrediente.description} - {quantidade} g
                                 </li>
                             ))}
                         </ul>
