@@ -30,7 +30,10 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    gap: 10%;
+    height: 100vh;
+    gap: 5%;
+    align-items: flex-start;
+    padding-top: 5%;
 
     .form {
       display: flex;
@@ -197,7 +200,7 @@
       background: #f1f1f3;
       box-shadow: 0px 8px 16px 0px rgb(0 0 0 / 3%);
       position: relative;
-      width: 80%;
+      width: 40%;
     }
 
     .card>*+* {
