@@ -16,28 +16,34 @@ const RegistrosMarmitas = () => {
     const [tamanhoMarmita, setTamanhoMarmita] = useState('');
     const [quantidade, setQuantidade] = useState('');
     const [sugestoes, setSugestoes] = useState([]);
+    const [sugestoesTraduzidas, setSugestoesTraduzidas] = useState([]);
 
     const controleSidebar = () => {
         setSidebarVisivel(!sidebarVisivel);
     };
+
     // Função para traduzir do português para o inglês
     const traduzirParaIngles = async (texto) => {
         try {
-            const response = await axios.post('https://api.traducao.com/translate', {
-                text: texto,
-                target_lang: 'en'
+            const response = await axios.post('https://translation.googleapis.com/language/translate/v2', {}, {
+                params: {
+                    q: texto,
+                    target: "en",
+                    key: 'AIzaSyDjP3VDd60XMK5bdE4Uw3Zclya4Piv0wAI' // Substitua pela sua chave de API real
+                }
             });
-            return response.data.translatedText;
+            return response.data.data.translations[0].translatedText;
         } catch (error) {
-            console.error('Erro ao traduzir:', error);
-            return texto; // Se houver erro na tradução, usa o texto original
+            console.error(error);
+            return ''; 
         }
     };
 
-    // Função para buscar ingredientes
+    // Função para buscar e traduzir ingredientes
     const buscarIngredientes = async (query) => {
         try {
             const termoTraduzido = await traduzirParaIngles(query);
+            
             const response = await axios.get(`https://api.nal.usda.gov/fdc/v1/foods/search`, {
                 params: {
                     query: termoTraduzido,
@@ -45,7 +51,17 @@ const RegistrosMarmitas = () => {
                     api_key: 'z8CqFn294O9VRiCN1eM2HZKc6fYiAINDijwwSuB7'
                 }
             });
-            setSugestoes(response.data.foods || []);
+            
+            const alimentos = response.data.foods || [];
+            setSugestoes(alimentos);
+
+            // Traduzir as descrições dos alimentos
+            const sugestoesTraduzidas = await Promise.all(alimentos.map(async (ingrediente) => {
+                const descricaoTraduzida = await traduzirParaIngles(ingrediente.description);
+                return { ...ingrediente, description: descricaoTraduzida };
+            }));
+
+            setSugestoesTraduzidas(sugestoesTraduzidas);
         } catch (error) {
             console.error('Erro ao buscar alimentos:', error);
         }
@@ -56,12 +72,14 @@ const RegistrosMarmitas = () => {
             buscarIngredientes(ingredientePesquisa);
         } else {
             setSugestoes([]);
+            setSugestoesTraduzidas([]);
         }
     }, [ingredientePesquisa]);
 
     const handleSugestaoClick = (ingrediente) => {
         setIngredientePesquisa(ingrediente.description);
         setSugestoes([]);
+        setSugestoesTraduzidas([]);
     };
 
     const adicionarIngrediente = () => {
@@ -107,9 +125,9 @@ const RegistrosMarmitas = () => {
                                 value={ingredientePesquisa}
                                 onChange={(e) => setIngredientePesquisa(e.target.value)}
                             />
-                            {sugestoes.length > 0 && (
+                            {sugestoesTraduzidas.length > 0 && (
                                 <ul className="sugestoes-list">
-                                    {sugestoes.map((ingrediente) => (
+                                    {sugestoesTraduzidas.map((ingrediente) => (
                                         <li
                                             key={ingrediente.fdcId}
                                             onClick={() => handleSugestaoClick(ingrediente)}
@@ -127,7 +145,6 @@ const RegistrosMarmitas = () => {
                             value={quantidade}
                             onChange={(e) => setQuantidade(e.target.value)}
                         />
-
                     </div>
                     <button type="button" className="btn adicionar" onClick={adicionarIngrediente}>
                         <img src={add} alt="ícone de adicionar" />
@@ -142,7 +159,7 @@ const RegistrosMarmitas = () => {
                 <div className="card">
                     <h3 className="card__title">{nomeMarmita || 'Nome da Marmita'}</h3>
                     <p>{tamanhoMarmita || 'Tamanho da Marmita'} g</p>
-                    <p className="card__content">
+                    <p className="card__content"></p>
                         Ingredientes:
                         <ul>
                             {ingredientesAdicionados.map((ingrediente, index) => (
@@ -151,7 +168,7 @@ const RegistrosMarmitas = () => {
                                 </li>
                             ))}
                         </ul>
-                    </p>
+                    
                     <div className="card__date">
                         {new Date().toLocaleDateString()}
                     </div>
