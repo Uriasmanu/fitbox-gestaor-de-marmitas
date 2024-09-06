@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "axios": "^1.7.5",
+    "fitbox-gestaor-de-marmitas": "file:",
     "js-cookie": "^3.0.5",
     "jwt-decode": "^4.0.0",
     "prop-types": "^15.8.1",

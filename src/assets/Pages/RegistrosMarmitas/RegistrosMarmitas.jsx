@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import Sidebar from '../../Components/Sidebar';
-import './_RegistrosMarmitas.scss'
-import './_RegistrosMarmitasMobile.scss'
+import './_RegistrosMarmitas.scss';
+import './_RegistrosMarmitasMobile.scss';
 import BotaoMenu from '../../Components/BotaoMenu/BotaoMenu';
-import chef from '../../Image/ChefHat.svg'
-import save from '../../Image/Save.svg'
-import add from '../../Image/Add.svg'
+import chef from '../../Image/ChefHat.svg';
+import save from '../../Image/Save.svg';
+import add from '../../Image/Add.svg';
 import axios from 'axios';
 
 const RegistrosMarmitas = () => {
@@ -16,7 +16,6 @@ const RegistrosMarmitas = () => {
     const [tamanhoMarmita, setTamanhoMarmita] = useState('');
     const [quantidade, setQuantidade] = useState('');
     const [sugestoes, setSugestoes] = useState([]);
-    const [sugestoesTraduzidas, setSugestoesTraduzidas] = useState([]);
 
     const controleSidebar = () => {
         setSidebarVisivel(!sidebarVisivel);
@@ -29,21 +28,40 @@ const RegistrosMarmitas = () => {
                 params: {
                     q: texto,
                     target: "en",
-                    key: 'AIzaSyDjP3VDd60XMK5bdE4Uw3Zclya4Piv0wAI' // Substitua pela sua chave de API real
+                    key: 'AIzaSyDjP3VDd60XMK5bdE4Uw3Zclya4Piv0wAI'
                 }
             });
             return response.data.data.translations[0].translatedText;
         } catch (error) {
             console.error(error);
-            return ''; 
+            return '';
+        }
+    };
+
+    // Função para traduzir do inglês para o português
+    const traduzirParaPortugues = async (texto) => {
+        try {
+            const response = await axios.post('https://translation.googleapis.com/language/translate/v2', {}, {
+                params: {
+                    q: texto,
+                    target: "pt",
+                    key: 'AIzaSyDjP3VDd60XMK5bdE4Uw3Zclya4Piv0wAI'
+                }
+            });
+            return response.data.data.translations[0].translatedText;
+        } catch (error) {
+            console.error(error);
+            return '';
         }
     };
 
     // Função para buscar e traduzir ingredientes
     const buscarIngredientes = async (query) => {
         try {
+            // Traduz o termo de busca para inglês, pois a API requer isso
             const termoTraduzido = await traduzirParaIngles(query);
-            
+
+            // Busca ingredientes com o termo traduzido
             const response = await axios.get(`https://api.nal.usda.gov/fdc/v1/foods/search`, {
                 params: {
                     query: termoTraduzido,
@@ -51,20 +69,29 @@ const RegistrosMarmitas = () => {
                     api_key: 'z8CqFn294O9VRiCN1eM2HZKc6fYiAINDijwwSuB7'
                 }
             });
-            
+
+            // Recebe a lista de alimentos da API
             const alimentos = response.data.foods || [];
-            setSugestoes(alimentos);
 
-            // Traduzir as descrições dos alimentos
-            const sugestoesTraduzidas = await Promise.all(alimentos.map(async (ingrediente) => {
-                const descricaoTraduzida = await traduzirParaIngles(ingrediente.description);
-                return { ...ingrediente, description: descricaoTraduzida };
-            }));
+            // Traduz a descrição dos alimentos para português
+            const alimentosTraduzidos = await Promise.all(
+                alimentos.map(async (alimento) => {
+                    const descricaoTraduzida = await traduzirParaPortugues(alimento.description); // Traduz para português
+                    return { ...alimento, descricaoTraduzida }; // Retorna o alimento com a descrição traduzida
+                })
+            );
 
-            setSugestoesTraduzidas(sugestoesTraduzidas);
+            // Atualiza o estado com os alimentos traduzidos
+            setSugestoes(alimentosTraduzidos);
+
         } catch (error) {
-            console.error('Erro ao buscar alimentos:', error);
+            console.error('Erro ao buscar e traduzir alimentos:', error);
         }
+    };
+
+    const handleSugestaoClick = (ingrediente) => {
+        setIngredientePesquisa(ingrediente.descricaoTraduzida); // Usa a descrição traduzida
+        setSugestoes([]);
     };
 
     useEffect(() => {
@@ -72,15 +99,8 @@ const RegistrosMarmitas = () => {
             buscarIngredientes(ingredientePesquisa);
         } else {
             setSugestoes([]);
-            setSugestoesTraduzidas([]);
         }
     }, [ingredientePesquisa]);
-
-    const handleSugestaoClick = (ingrediente) => {
-        setIngredientePesquisa(ingrediente.description);
-        setSugestoes([]);
-        setSugestoesTraduzidas([]);
-    };
 
     const adicionarIngrediente = () => {
         if (ingredientePesquisa) {
@@ -125,14 +145,14 @@ const RegistrosMarmitas = () => {
                                 value={ingredientePesquisa}
                                 onChange={(e) => setIngredientePesquisa(e.target.value)}
                             />
-                            {sugestoesTraduzidas.length > 0 && (
+                            {sugestoes.length > 0 && (
                                 <ul className="sugestoes-list">
-                                    {sugestoesTraduzidas.map((ingrediente) => (
+                                    {sugestoes.map((ingrediente) => (
                                         <li
                                             key={ingrediente.fdcId}
                                             onClick={() => handleSugestaoClick(ingrediente)}
                                         >
-                                            {ingrediente.description}
+                                            {ingrediente.descricaoTraduzida} {/* Usa a descrição traduzida */}
                                         </li>
                                     ))}
                                 </ul>
@@ -160,27 +180,27 @@ const RegistrosMarmitas = () => {
                     <h3 className="card__title">{nomeMarmita || 'Nome da Marmita'}</h3>
                     <p>{tamanhoMarmita || 'Tamanho da Marmita'} g</p>
                     <p className="card__content"></p>
-                        Ingredientes:
-                        <ul>
-                            {ingredientesAdicionados.map((ingrediente, index) => (
-                                <li key={index}>
-                                    {ingrediente.description} - {quantidade} g
-                                </li>
-                            ))}
-                        </ul>
-                    
+                    Ingredientes:
+                    <ul>
+                        {ingredientesAdicionados.map((ingrediente, index) => (
+                            <li key={index}>
+                                {ingrediente.description} - {quantidade} g
+                            </li>
+                        ))}
+                    </ul>
+
                     <div className="card__date">
                         {new Date().toLocaleDateString()}
                     </div>
                     <div className="card__arrow">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="15" width="15">
-                            <path fill="#fff" d="M13.4697 17.9697C13.1768 18.2626 13.1768 18.7374 13.4697 19.0303C13.7626 19.3232 14.2374 19.3232 14.5303 19.0303L20.3232 13.2374C21.0066 12.554 21.0066 11.446 20.3232 10.7626L14.5303 4.96967C14.2374 4.67678 13.7626 4.67678 13.4697 4.96967C13.1768 5.26256 13.1768 5.73744 13.4697 6.03033L18.6893 11.25H4C3.58579 11.25 3.25 11.5858 3.25 12C3.25 12.4142 3.58579 12.75 4 12.75H18.6893L13.4697 17.9697Z"></path>
+                            <path fill="#fff" d="M13.4697 17.9697C13.1768 18.2626 13.1768 18.7374 13.4697 19.0303C13.7626 19.3232 14.2374 19.3232 14.5303 19.0303L20.3232 13.2374C21.0066 12.554 21.0066 11.446 20.3232 10.7626L14.5303 4.96967C14.2374 4.67678 13.7626 4.67678 13.4697 4.96967C13.1768 5.26256 13.1768 5.73744 13.4697 6.03033L18.6893 11.25H5.31066L10.5303 6.03033C10.8232 5.73744 10.8232 5.26256 10.5303 4.96967C10.2374 4.67678 9.76256 4.67678 9.46967 4.96967L3.67678 10.7626C2.99335 11.446 2.99335 12.554 3.67678 13.2374L9.46967 19.0303C9.76256 19.3232 10.2374 19.3232 10.5303 19.0303L13.4697 17.9697Z" />
                         </svg>
                     </div>
                 </div>
             </main>
         </div>
-    )
-}
+    );
+};
 
 export default RegistrosMarmitas;
