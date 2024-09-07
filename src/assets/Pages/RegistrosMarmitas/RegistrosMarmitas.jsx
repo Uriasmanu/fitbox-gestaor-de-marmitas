@@ -20,6 +20,7 @@ const RegistrosMarmitas = () => {
     const [quantidade, setQuantidade] = useState('');
     const [sugestoes, setSugestoes] = useState([]);
 
+
     const controleSidebar = () => {
         setSidebarVisivel(!sidebarVisivel);
     };
@@ -112,6 +113,12 @@ const RegistrosMarmitas = () => {
         }
     };
 
+    const handleExcluirIngrediente = (index) => {
+        setIngredientesAdicionados((prevIngredientes) =>
+          prevIngredientes.filter((_, i) => i !== index)
+        );
+      };
+
     return (
         <div className='RegistrosMarmitas'>
             <div className="botaoMenu">
@@ -188,7 +195,7 @@ const RegistrosMarmitas = () => {
                         {ingredientesAdicionados.map((ingrediente, index) => (
                             <li key={index}>
                                 {ingrediente.description} - {quantidade} g
-                                <BotaoExcluir/>
+                                <BotaoExcluir onClick={() => handleExcluirIngrediente(index)} />
                             </li>
                         ))}
                     </ul>
