@@ -2,11 +2,12 @@ import { useState, useEffect } from 'react';
 import Sidebar from '../../Components/Sidebar';
 import './_RegistrosMarmitas.scss';
 import './_RegistrosMarmitasMobile.scss';
-import BotaoMenu from '../../Components/BotaoMenu/BotaoMenu';
+import BotaoMenu from '../../Components/Botoes/BotaoMenu/BotaoMenu';
 import chef from '../../Image/ChefHat.svg';
 import save from '../../Image/Save.svg';
 import add from '../../Image/Add.svg';
 import axios from 'axios';
+import BotaoEditar from '../../Components/Botoes/BotaoEditar/BotaoEditar';
 
 const RegistrosMarmitas = () => {
     const [sidebarVisivel, setSidebarVisivel] = useState(false);
@@ -193,9 +194,7 @@ const RegistrosMarmitas = () => {
                         {new Date().toLocaleDateString()}
                     </div>
                     <div className="card__arrow">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="15" width="15">
-                            <path fill="#fff" d="M13.4697 17.9697C13.1768 18.2626 13.1768 18.7374 13.4697 19.0303C13.7626 19.3232 14.2374 19.3232 14.5303 19.0303L20.3232 13.2374C21.0066 12.554 21.0066 11.446 20.3232 10.7626L14.5303 4.96967C14.2374 4.67678 13.7626 4.67678 13.4697 4.96967C13.1768 5.26256 13.1768 5.73744 13.4697 6.03033L18.6893 11.25H5.31066L10.5303 6.03033C10.8232 5.73744 10.8232 5.26256 10.5303 4.96967C10.2374 4.67678 9.76256 4.67678 9.46967 4.96967L3.67678 10.7626C2.99335 11.446 2.99335 12.554 3.67678 13.2374L9.46967 19.0303C9.76256 19.3232 10.2374 19.3232 10.5303 19.0303L13.4697 17.9697Z" />
-                        </svg>
+                        <BotaoEditar/>
                     </div>
                 </div>
             </main>
