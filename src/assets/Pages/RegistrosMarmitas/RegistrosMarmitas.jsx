@@ -19,6 +19,9 @@ const RegistrosMarmitas = () => {
     const [tamanhoMarmita, setTamanhoMarmita] = useState('');
     const [quantidade, setQuantidade] = useState('');
     const [sugestoes, setSugestoes] = useState([]);
+    const [ingredienteEditando, setIngredienteEditando] = useState(null);
+    const [novoIngrediente, setNovoIngrediente] = useState('');
+
 
 
     const controleSidebar = () => {
@@ -115,9 +118,26 @@ const RegistrosMarmitas = () => {
 
     const handleExcluirIngrediente = (index) => {
         setIngredientesAdicionados((prevIngredientes) =>
-          prevIngredientes.filter((_, i) => i !== index)
+            prevIngredientes.filter((_, i) => i !== index)
         );
-      };
+    };
+
+    const iniciarEdicao = (index) => {
+        setIngredienteEditando(index);
+        setNovoIngrediente(ingredientesAdicionados[index].description);
+    };
+
+    const salvarEdicao = () => {
+        setIngredientesAdicionados((prevIngredientes) =>
+            prevIngredientes.map((ingrediente, index) =>
+                index === ingredienteEditando
+                    ? { ...ingrediente, description: novoIngrediente }
+                    : ingrediente
+            )
+        );
+        setIngredienteEditando(null);
+        setNovoIngrediente('');
+    };
 
     return (
         <div className='RegistrosMarmitas'>
@@ -194,8 +214,22 @@ const RegistrosMarmitas = () => {
                     <ul>
                         {ingredientesAdicionados.map((ingrediente, index) => (
                             <li key={index}>
-                                {ingrediente.description} - {quantidade} g
-                                <BotaoExcluir onClick={() => handleExcluirIngrediente(index)} />
+                                {ingredienteEditando === index ? (
+                                    <>
+                                        <input
+                                            type="text"
+                                            value={novoIngrediente}
+                                            onChange={(e) => setNovoIngrediente(e.target.value)}
+                                        />
+                                        <button onClick={salvarEdicao}>Salvar</button>
+                                    </>
+                                ) : (
+                                    <>
+                                        {ingrediente.description} - {quantidade} g
+                                        
+                                        <BotaoExcluir onClick={() => handleExcluirIngrediente(index)} />
+                                    </>
+                                )}
                             </li>
                         ))}
                     </ul>
@@ -204,7 +238,7 @@ const RegistrosMarmitas = () => {
                         {new Date().toLocaleDateString()}
                     </div>
                     <div className="card__arrow">
-                        <BotaoEditar/>
+       
                     </div>
                 </div>
             </main>
