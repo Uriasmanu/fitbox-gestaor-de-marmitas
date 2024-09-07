@@ -5,101 +5,32 @@ import './_RegistrosMarmitasMobile.scss';
 import chef from '../../Image/ChefHat.svg';
 import save from '../../Image/Save.svg';
 import add from '../../Image/Add.svg';
-import axios from 'axios';
 import BotaoMenu from '../../Components/Botoes/BotaoMenu/BotaoMenu';
 import BotaoExcluir from '../../Components/Botoes/BotaoExcluir/BotaoExcluir';
-import BotaoEditar from '../../Components/Botoes/BotaoEditar/BotaoEditar';
+import { useIngredient } from '../../context/IngredientContext';
 
 
 const RegistrosMarmitas = () => {
     const [sidebarVisivel, setSidebarVisivel] = useState(false);
-    const [nomeMarmita, setNomeMarmita] = useState('');
-    const [ingredientePesquisa, setIngredientePesquisa] = useState('');
-    const [ingredientesAdicionados, setIngredientesAdicionados] = useState([]);
-    const [tamanhoMarmita, setTamanhoMarmita] = useState('');
-    const [quantidade, setQuantidade] = useState('');
-    const [sugestoes, setSugestoes] = useState([]);
-    const [ingredienteEditando, setIngredienteEditando] = useState(null);
-    const [novoIngrediente, setNovoIngrediente] = useState('');
-
+    
+    const {
+        editMode, setEditMode, editIngredient, setEditIngredient,
+        nomeMarmita, setNomeMarmita,
+        ingredientePesquisa, setIngredientePesquisa,
+        ingredientesAdicionados, setIngredientesAdicionados,
+        tamanhoMarmita, setTamanhoMarmita,
+        quantidade, setQuantidade,
+        sugestoes, setSugestoes,
+        novoIngrediente, setNovoIngrediente,
+        buscarIngredientes, handleSugestaoClick,
+        adicionarIngrediente, handleExcluirIngrediente,
+    } = useIngredient();
 
 
     const controleSidebar = () => {
         setSidebarVisivel(!sidebarVisivel);
     };
 
-    // Função para traduzir do português para o inglês
-    const traduzirParaIngles = async (texto) => {
-        try {
-            const response = await axios.post('https://translation.googleapis.com/language/translate/v2', {}, {
-                params: {
-                    q: texto,
-                    target: "en",
-                    key: 'AIzaSyDjP3VDd60XMK5bdE4Uw3Zclya4Piv0wAI'
-                }
-            });
-            return response.data.data.translations[0].translatedText;
-        } catch (error) {
-            console.error(error);
-            return '';
-        }
-    };
-
-    // Função para traduzir do inglês para o português
-    const traduzirParaPortugues = async (texto) => {
-        try {
-            const response = await axios.post('https://translation.googleapis.com/language/translate/v2', {}, {
-                params: {
-                    q: texto,
-                    target: "pt",
-                    key: 'AIzaSyDjP3VDd60XMK5bdE4Uw3Zclya4Piv0wAI'
-                }
-            });
-            return response.data.data.translations[0].translatedText;
-        } catch (error) {
-            console.error(error);
-            return '';
-        }
-    };
-
-    // Função para buscar e traduzir ingredientes
-    const buscarIngredientes = async (query) => {
-        try {
-            // Traduz o termo de busca para inglês, pois a API requer isso
-            const termoTraduzido = await traduzirParaIngles(query);
-
-            // Busca ingredientes com o termo traduzido
-            const response = await axios.get(`https://api.nal.usda.gov/fdc/v1/foods/search`, {
-                params: {
-                    query: termoTraduzido,
-                    pageSize: 10,
-                    api_key: 'z8CqFn294O9VRiCN1eM2HZKc6fYiAINDijwwSuB7'
-                }
-            });
-
-            // Recebe a lista de alimentos da API
-            const alimentos = response.data.foods || [];
-
-            // Traduz a descrição dos alimentos para português
-            const alimentosTraduzidos = await Promise.all(
-                alimentos.map(async (alimento) => {
-                    const descricaoTraduzida = await traduzirParaPortugues(alimento.description); // Traduz para português
-                    return { ...alimento, descricaoTraduzida }; // Retorna o alimento com a descrição traduzida
-                })
-            );
-
-            // Atualiza o estado com os alimentos traduzidos
-            setSugestoes(alimentosTraduzidos);
-
-        } catch (error) {
-            console.error('Erro ao buscar e traduzir alimentos:', error);
-        }
-    };
-
-    const handleSugestaoClick = (ingrediente) => {
-        setIngredientePesquisa(ingrediente.descricaoTraduzida); // Usa a descrição traduzida
-        setSugestoes([]);
-    };
 
     useEffect(() => {
         if (ingredientePesquisa.length > 2) {
@@ -109,36 +40,9 @@ const RegistrosMarmitas = () => {
         }
     }, [ingredientePesquisa]);
 
-    const adicionarIngrediente = () => {
-        if (ingredientePesquisa) {
-            setIngredientesAdicionados([...ingredientesAdicionados, { description: ingredientePesquisa, quantidade: '' }]);
-            setIngredientePesquisa('');
-        }
-    };
 
-    const handleExcluirIngrediente = (index) => {
-        setIngredientesAdicionados((prevIngredientes) =>
-            prevIngredientes.filter((_, i) => i !== index)
-        );
-    };
 
-    const iniciarEdicao = (index) => {
-        setIngredienteEditando(index);
-        setNovoIngrediente(ingredientesAdicionados[index].description);
-    };
-
-    const salvarEdicao = () => {
-        setIngredientesAdicionados((prevIngredientes) =>
-            prevIngredientes.map((ingrediente, index) =>
-                index === ingredienteEditando
-                    ? { ...ingrediente, description: novoIngrediente }
-                    : ingrediente
-            )
-        );
-        setIngredienteEditando(null);
-        setNovoIngrediente('');
-    };
-
+    
     return (
         <div className='RegistrosMarmitas'>
             <div className="botaoMenu">
@@ -214,22 +118,8 @@ const RegistrosMarmitas = () => {
                     <ul>
                         {ingredientesAdicionados.map((ingrediente, index) => (
                             <li key={index}>
-                                {ingredienteEditando === index ? (
-                                    <>
-                                        <input
-                                            type="text"
-                                            value={novoIngrediente}
-                                            onChange={(e) => setNovoIngrediente(e.target.value)}
-                                        />
-                                        <button onClick={salvarEdicao}>Salvar</button>
-                                    </>
-                                ) : (
-                                    <>
-                                        {ingrediente.description} - {quantidade} g
-                                        
-                                        <BotaoExcluir onClick={() => handleExcluirIngrediente(index)} />
-                                    </>
-                                )}
+                                {ingrediente.description} - {quantidade} g
+                                <BotaoExcluir onClick={() => handleExcluirIngrediente(index)} />
                             </li>
                         ))}
                     </ul>
@@ -238,7 +128,7 @@ const RegistrosMarmitas = () => {
                         {new Date().toLocaleDateString()}
                     </div>
                     <div className="card__arrow">
-       
+
                     </div>
                 </div>
             </main>
