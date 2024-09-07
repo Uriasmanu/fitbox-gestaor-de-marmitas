@@ -8,6 +8,7 @@ import save from '../../Image/Save.svg';
 import add from '../../Image/Add.svg';
 import axios from 'axios';
 import BotaoEditar from '../../Components/Botoes/BotaoEditar/BotaoEditar';
+import BotaoExcluir from '../../Components/Botoes/BotaoExcluir/BotaoExcluir';
 
 const RegistrosMarmitas = () => {
     const [sidebarVisivel, setSidebarVisivel] = useState(false);
@@ -186,6 +187,7 @@ const RegistrosMarmitas = () => {
                         {ingredientesAdicionados.map((ingrediente, index) => (
                             <li key={index}>
                                 {ingrediente.description} - {quantidade} g
+                                <BotaoExcluir/>
                             </li>
                         ))}
                     </ul>
