@@ -1,4 +1,5 @@
-import BotaoFavoritar from '../BotaoFavoritar/BotaoFavoritar';
+
+import BotaoFavoritar from '../Botoes/BotaoFavoritar/BotaoFavoritar';
 import './_CardMarmita.scss'
 import './_CardMarmitaMobile.scss'
 import PropTypes from 'prop-types';
@@ -25,7 +26,7 @@ const CardMarmita = ({ id, name, descricao, img, isHidden, onToggleFavoritar, is
                             </label>
                         </div>
                     </div>
-                    <BotaoFavoritar 
+                    <BotaoFavoritar
                         isFavorited={isFavorited}
                         onClick={() => onToggleFavoritar(id)} 
                     />

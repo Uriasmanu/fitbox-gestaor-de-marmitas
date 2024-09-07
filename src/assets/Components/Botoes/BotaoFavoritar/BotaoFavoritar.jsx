@@ -1,5 +1,6 @@
 import './_BotaoFavoritar.scss'
 import './_BotaoFavoritarMobile.scss'
+import PropTypes from 'prop-types';
 
 const BotaoFavoritar = ({ isFavorited, onClick }) => {
     return (
@@ -12,5 +13,9 @@ const BotaoFavoritar = ({ isFavorited, onClick }) => {
         </div>
     )
 }
+BotaoFavoritar.propTypes = {
+    isFavorited: PropTypes.bool.isRequired,
+    onClick: PropTypes.func.isRequired
+  };
 
 export default BotaoFavoritar;

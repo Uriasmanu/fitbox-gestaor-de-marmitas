@@ -1,11 +1,8 @@
 import { useState, useRef } from "react";
-import BotaoMenu from "../../Components/BotaoMenu/BotaoMenu";
 import Sidebar from "../../Components/Sidebar";
-import BotaoNavegacao from "../../Components/BotaoNavegar/BotaoNavegar";
 import CardMarmita from "../../Components/CardMarmita/CardMarmita";
 import ComponenteNotificacao from "../../Components/ComponenteNotificacao/ComponenteNotificacao";
 import ComponenteUser from "../../Components/ComponenteUser/ComponenteUser";
-import BotaoEnviar from "../../Components/BotaoEnviar/BotaoEnviar";
 import data from '../../JSONs/Marmitas.json';
 import iconeMarmita from '../../Image/marmita.svg';
 import iconeFavoritar from '../../Image/favoritar.svg';
@@ -16,6 +13,9 @@ import './_inicio.scss';
 import './_inicioMobile.scss';
 import ComponeteDia from "../../Components/ComponeteDia/ComponeteDia";
 import EstoqueContador from "../../Components/EstoqueContador/EstoqueContador";
+import BotaoMenu from "../../Components/Botoes/BotaoMenu/BotaoMenu";
+import BotaoEnviar from "../../Components/Botoes/BotaoEnviar/BotaoEnviar";
+import BotaoNavegacao from "../../Components/Botoes/BotaoNavegar/BotaoNavegar";
 
 const Home = () => {
   const [sidebarVisivel, setSidebarVisivel] = useState(false);

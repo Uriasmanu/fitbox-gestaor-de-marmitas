@@ -1,6 +1,7 @@
-import BotaoVoltar from '../../Components/BotaoVoltar/BotaoVoltar';
+
 import './_notFound.scss'
 import "../../Styles/_styleBase.scss"; 
+import BotaoVoltar from '../../Components/Botoes/BotaoVoltar/BotaoVoltar';
 
 const NotFound = () => {
     return (
@@ -21,9 +22,9 @@ const NotFound = () => {
                     <div className="tv">
                         <div className="cruve">
                             <svg
-                                xml:space="preserve"
+                                xmlSpace="preserve"
                                 viewBox="0 0 189.929 189.929"
-                                xmlns:xlink="http://www.w3.org/1999/xlink"
+                                xmlnsXlink="http://www.w3.org/1999/xlink"
                                 xmlns="http://www.w3.org/2000/svg"
                                 version="1.1"
                                 className="curve_svg"

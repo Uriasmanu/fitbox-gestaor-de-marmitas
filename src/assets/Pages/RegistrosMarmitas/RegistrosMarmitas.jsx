@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react';
 import Sidebar from '../../Components/Sidebar';
 import './_RegistrosMarmitas.scss';
 import './_RegistrosMarmitasMobile.scss';
-import BotaoMenu from '../../Components/Botoes/BotaoMenu/BotaoMenu';
 import chef from '../../Image/ChefHat.svg';
 import save from '../../Image/Save.svg';
 import add from '../../Image/Add.svg';
 import axios from 'axios';
-import BotaoEditar from '../../Components/Botoes/BotaoEditar/BotaoEditar';
+import BotaoMenu from '../../Components/Botoes/BotaoMenu/BotaoMenu';
 import BotaoExcluir from '../../Components/Botoes/BotaoExcluir/BotaoExcluir';
+import BotaoEditar from '../../Components/Botoes/BotaoEditar/BotaoEditar';
+
 
 const RegistrosMarmitas = () => {
     const [sidebarVisivel, setSidebarVisivel] = useState(false);
