@@ -14,14 +14,12 @@ const RegistrosMarmitas = () => {
     const [sidebarVisivel, setSidebarVisivel] = useState(false);
     
     const {
-        editMode, setEditMode, editIngredient, setEditIngredient,
         nomeMarmita, setNomeMarmita,
         ingredientePesquisa, setIngredientePesquisa,
-        ingredientesAdicionados, setIngredientesAdicionados,
+        ingredientesAdicionados, 
         tamanhoMarmita, setTamanhoMarmita,
         quantidade, setQuantidade,
         sugestoes, setSugestoes,
-        novoIngrediente, setNovoIngrediente,
         buscarIngredientes, handleSugestaoClick,
         adicionarIngrediente, handleExcluirIngrediente,
     } = useIngredient();
