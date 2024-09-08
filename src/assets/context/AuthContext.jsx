@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }) => {
         if (token) {
             try {
                 const decodedToken = jwtDecode(token);
-                return decodedToken.sub || 'Usuário'; 
+                return decodedToken.sub || 'Usuário';
             } catch (error) {
                 return 'Usuário';
             }
@@ -61,8 +61,23 @@ export const AuthProvider = ({ children }) => {
         return 'Usuário';
     };
 
+    // AuthContext.js
+    const getUserId = () => {
+        if (token) {
+            try {
+                const decodedToken = jwtDecode(token);
+                return decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'] || 'ID não encontrado'; // Verifique o nome do claim
+            } catch (error) {
+                console.error('Token decoding error:', error);
+                return 'ID não encontrado';
+            }
+        }
+        return 'ID não encontrado';
+    };
+
+
     return (
-        <AuthContext.Provider value={{ token, isAuthenticated, error, loading, login, logout, getUserName }}>
+        <AuthContext.Provider value={{ token, isAuthenticated, error, loading, login, logout, getUserName, getUserId }}>
             {children}
         </AuthContext.Provider>
     );

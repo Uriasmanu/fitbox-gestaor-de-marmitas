@@ -17,30 +17,30 @@ function App() {
     <AuthProvider>
       <SidebarProvider>
         <MarmitaProvider>
-          <IngredientProvider>
-            <Router>
-              <Routes>
-                <Route path="/" element={<Login />} />
-                <Route
-                  path="/home"
-                  element={
-                    <ProtectedRoute>
-                      <Home />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/registrosMarmitas"
-                  element={
-                    <ProtectedRoute>
-                      <RegistrosMarmitas />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Router>
-          </IngredientProvider>
+        <IngredientProvider>
+          <Router>
+            <Routes>
+              <Route path="/" element={<Login />} />
+              <Route
+                path="/home"
+                element={
+                  <ProtectedRoute>
+                    <Home />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/registrosMarmitas"
+                element={
+                  <ProtectedRoute>
+                    <RegistrosMarmitas />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Router>
+        </IngredientProvider>
         </MarmitaProvider>
       </SidebarProvider>
     </AuthProvider>
