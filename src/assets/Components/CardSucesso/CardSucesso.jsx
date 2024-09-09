@@ -1,4 +1,5 @@
 import './_CardSucesso.scss'
+import PropTypes from 'prop-types';
 
 const CardSucesso = ({ onDismiss }) => {
     return (
@@ -24,5 +25,9 @@ const CardSucesso = ({ onDismiss }) => {
     )
 
 }
+
+CardSucesso.propTypes = {
+    onDismiss: PropTypes.node.isRequired, // Esperando um ReactNode
+};
 
 export default CardSucesso;

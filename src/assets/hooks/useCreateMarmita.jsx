@@ -1,4 +1,3 @@
-// useCreateMarmita.js
 import { useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
@@ -15,7 +14,6 @@ const useCreateMarmita = () => {
     
         // Verifica se o token está presente
         const authToken = Cookies.get('authToken');
-       // console.log('Auth Token:', authToken); 
     
         if (!authToken) {
             console.error('Token de autenticação não encontrado');
@@ -26,7 +24,7 @@ const useCreateMarmita = () => {
     
         try {
             const userId = getUserId(); // Obtém o ID do usuário logado
-    
+            //console.log(userId)
             const response = await axios.post(
                 'https://fit-box-api-b0c8eufpdxbxgve7.brazilsouth-01.azurewebsites.net/api/Marmitas',
                 {
@@ -34,10 +32,10 @@ const useCreateMarmita = () => {
                     tamanhoMarmita: tamanhoMarmita,
                     loginId: userId,
                     ingredientes: ingredientes.map(ingrediente => ({
+                        loginId: userId,
                         nameIngrediente: ingrediente.description,
-                         // Certifique-se de que isso é o esperado
+                        quantidadeEmGramas: quantidade,
                     })),
-                    quantidadeEmGramas: quantidade
                 },
                 {
                     headers: {
@@ -49,14 +47,21 @@ const useCreateMarmita = () => {
     
             return response.data;
         } catch (err) {
-            console.error('Erro ao criar marmita:', err.response ? err.response.data : err.message);
-            setError(err.response ? err.response.data.message : err.message);
+            if (err.response) {
+                console.error('Erro ao criar marmita:', err.response.data);
+                setError(err.response.data.message || 'Erro desconhecido');
+            } else if (err.request) {
+                console.error('Nenhuma resposta recebida:', err.request);
+                setError('Nenhuma resposta recebida do servidor');
+            } else {
+                console.error('Erro ao configurar a requisição:', err.message);
+                setError('Erro ao configurar a requisição');
+            }
             throw err;
         } finally {
             setLoading(false);
         }
     };
-    
 
     return { createMarmita, loading, error };
 };
