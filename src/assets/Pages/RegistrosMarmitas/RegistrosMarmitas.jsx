@@ -1,4 +1,3 @@
-// RegistrosMarmitas.js
 import { useState, useEffect } from 'react';
 import Sidebar from '../../Components/Sidebar';
 import './_RegistrosMarmitas.scss';
@@ -10,9 +9,11 @@ import BotaoMenu from '../../Components/Botoes/BotaoMenu/BotaoMenu';
 import BotaoExcluir from '../../Components/Botoes/BotaoExcluir/BotaoExcluir';
 import { useIngredient } from '../../context/IngredientContext';
 import useCreateMarmita from '../../hooks/useCreateMarmita';
+import CardSucesso from '../../Components/CardSucesso/CardSucesso';
 
 const RegistrosMarmitas = () => {
     const [sidebarVisivel, setSidebarVisivel] = useState(false);
+    const [marmitaCriadaComSucesso, setMarmitaCriadaComSucesso] = useState(false);
 
     const {
         nomeMarmita, setNomeMarmita,
@@ -42,10 +43,16 @@ const RegistrosMarmitas = () => {
     const handleCreateMarmita = async () => {
         try {
             await createMarmita(nomeMarmita, tamanhoMarmita, ingredientesAdicionados, quantidade);
-            // Sucesso, faça algo como redirecionar ou mostrar uma mensagem
+            // Define o estado para mostrar o CardSucesso
+            setMarmitaCriadaComSucesso(true);
         } catch (err) {
             // Handle error, show a message to the user
+            console.error('Erro ao criar marmita:', err);
         }
+    };
+
+    const handleDismissSucesso = () => {
+        setMarmitaCriadaComSucesso(false);
     };
 
     return (
@@ -109,40 +116,41 @@ const RegistrosMarmitas = () => {
                         <img src={add} alt="ícone de adicionar" />
                         Adicionar ingrediente
                     </button>
-                    
                 </form>
 
-                <div className="card">
-                    <h3 className="card__title">{nomeMarmita || 'Nome da Marmita'}</h3>
-                    <p>{tamanhoMarmita || 'Tamanho da Marmita'} g</p>
-                    <p className="card__content"></p>
-                    Ingredientes:
-                    <ul>
-                        {ingredientesAdicionados.map((ingrediente, index) => (
-                            <li key={index}>
-                                {ingrediente.description} - {quantidade} g
-                                <BotaoExcluir onClick={() => handleExcluirIngrediente(index)} />
-                            </li>
-                        ))}
-                    </ul>
+                {marmitaCriadaComSucesso ? (
+                    <CardSucesso onDismiss={handleDismissSucesso} />
+                ) : (
+                    <div className="card">
+                        <h3 className="card__title">{nomeMarmita || 'Nome da Marmita'}</h3>
+                        <p>{tamanhoMarmita || 'Tamanho da Marmita'} g</p>
+                        <p className="card__content"></p>
+                        Ingredientes:
+                        <ul>
+                            {ingredientesAdicionados.map((ingrediente, index) => (
+                                <li key={index}>
+                                    {ingrediente.description} - {quantidade} g
+                                    <BotaoExcluir onClick={() => handleExcluirIngrediente(index)} />
+                                </li>
+                            ))}
+                        </ul>
 
-                    <div className="card__date">
-                        {new Date().toLocaleDateString()}
-                        
+                        <div className="card__date">
+                            {new Date().toLocaleDateString()}
+                        </div>
+                        <button
+                            type="button"
+                            className="btn criar"
+                            onClick={handleCreateMarmita}
+                            disabled={loading}
+                        >
+                            <img src={save} alt="ícone de salvar" />
+                            {loading ? 'Criando...' : 'Criar marmita'}
+                        </button>
+                        <div className="card__arrow">
+                        </div>
                     </div>
-                    <button
-                        type="button"
-                        className="btn criar"
-                        onClick={handleCreateMarmita}
-                        disabled={loading}
-                    >
-                        <img src={save} alt="ícone de salvar" />
-                        {loading ? 'Criando...' : 'Criar marmita'}
-                    </button>
-                    <div className="card__arrow">
-
-                    </div>
-                </div>
+                )}
             </main>
         </div>
     );
