@@ -1,13 +1,12 @@
 
 import BotaoFavoritar from '../Botoes/BotaoFavoritar/BotaoFavoritar';
-import './_CardMarmita.scss'
-import './_CardMarmitaMobile.scss'
+
 import PropTypes from 'prop-types';
 
 
 const CardMarmita = ({ id, tamanhoMarmita, name, dataCriacao, img, isHidden, onToggleFavoritar, isFavorited }) => {
     return (
-        <div className='container-CardMarmita'>
+
             <div className="card">
                 <div className="bar"></div>
                 <div className="card_form">
@@ -32,7 +31,7 @@ const CardMarmita = ({ id, tamanhoMarmita, name, dataCriacao, img, isHidden, onT
                     />
                 </div>
             </div>
-        </div>
+ 
     )
 }
 
