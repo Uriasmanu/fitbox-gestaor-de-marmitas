@@ -200,6 +200,18 @@
       position: relative;
       width: 40%;
 
+      .criar {
+        background: #55a353;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 100%;
+        font-weight: bold;
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+      }
+
       ul {
         margin-top: 5%;
         display: flex;

@@ -1,3 +1,4 @@
+// RegistrosMarmitas.js
 import { useState, useEffect } from 'react';
 import Sidebar from '../../Components/Sidebar';
 import './_RegistrosMarmitas.scss';
@@ -8,15 +9,15 @@ import add from '../../Image/Add.svg';
 import BotaoMenu from '../../Components/Botoes/BotaoMenu/BotaoMenu';
 import BotaoExcluir from '../../Components/Botoes/BotaoExcluir/BotaoExcluir';
 import { useIngredient } from '../../context/IngredientContext';
-
+import useCreateMarmita from '../../hooks/useCreateMarmita';
 
 const RegistrosMarmitas = () => {
     const [sidebarVisivel, setSidebarVisivel] = useState(false);
-    
+
     const {
         nomeMarmita, setNomeMarmita,
         ingredientePesquisa, setIngredientePesquisa,
-        ingredientesAdicionados, 
+        ingredientesAdicionados,
         tamanhoMarmita, setTamanhoMarmita,
         quantidade, setQuantidade,
         sugestoes, setSugestoes,
@@ -24,11 +25,11 @@ const RegistrosMarmitas = () => {
         adicionarIngrediente, handleExcluirIngrediente,
     } = useIngredient();
 
+    const { createMarmita, loading } = useCreateMarmita();
 
     const controleSidebar = () => {
         setSidebarVisivel(!sidebarVisivel);
     };
-
 
     useEffect(() => {
         if (ingredientePesquisa.length > 2) {
@@ -38,9 +39,15 @@ const RegistrosMarmitas = () => {
         }
     }, [ingredientePesquisa]);
 
+    const handleCreateMarmita = async () => {
+        try {
+            await createMarmita(nomeMarmita, tamanhoMarmita, ingredientesAdicionados, quantidade);
+            // Sucesso, faça algo como redirecionar ou mostrar uma mensagem
+        } catch (err) {
+            // Handle error, show a message to the user
+        }
+    };
 
-
-    
     return (
         <div className='RegistrosMarmitas'>
             <div className="botaoMenu">
@@ -102,10 +109,7 @@ const RegistrosMarmitas = () => {
                         <img src={add} alt="ícone de adicionar" />
                         Adicionar ingrediente
                     </button>
-                    <button className="btn criar">
-                        <img src={save} alt="ícone de salvar" />
-                        Criar marmita
-                    </button>
+                    
                 </form>
 
                 <div className="card">
@@ -124,7 +128,17 @@ const RegistrosMarmitas = () => {
 
                     <div className="card__date">
                         {new Date().toLocaleDateString()}
+                        
                     </div>
+                    <button
+                        type="button"
+                        className="btn criar"
+                        onClick={handleCreateMarmita}
+                        disabled={loading}
+                    >
+                        <img src={save} alt="ícone de salvar" />
+                        {loading ? 'Criando...' : 'Criar marmita'}
+                    </button>
                     <div className="card__arrow">
 
                     </div>
