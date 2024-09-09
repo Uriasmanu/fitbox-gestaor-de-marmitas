@@ -17,15 +17,21 @@ import BotaoEnviar from "../../Components/Botoes/BotaoEnviar/BotaoEnviar";
 import BotaoNavegacao from "../../Components/Botoes/BotaoNavegar/BotaoNavegar";
 import { useSidebar } from "../../context/SidebarContext";
 import { useMarmitas } from "../../context/MarmitaContext";
+import { useMarmitasList } from "../../hooks/useMarmitasList";
 
 const Home = () => {
   const { sidebarVisivel, controleSidebar } = useSidebar();
-  const { items, dropAlmoco, dropJantar, favoritedIds, onDragStart, onDrop, toggleFavoritar } = useMarmitas();
+  const { dropAlmoco, dropJantar, favoritedIds, onDragStart, onDrop, toggleFavoritar } = useMarmitas();
 
   const [abaSelecionada, setAbaSelecionada] = useState(null);
   const [rightBarVisible, setRightBarVisible] = useState(false);
   const [startX, setStartX] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
+
+  const { marmitas, loading, error } = useMarmitasList();
+
+  console.log('Marmitas:', marmitas); // Adicionado para depuração
+  console.log('Erro:', error); // Adicionado para depuração
 
   const containerRightBarRef = useRef(null);
 
@@ -88,23 +94,18 @@ const Home = () => {
           onTouchEnd={handleTouchEnd}
           style={{ marginRight: rightBarVisible ? '300px' : '0' }}
         >
-          {items.map((marmita, index) => (
-            <div
-              key={marmita.id}
-              draggable
-              onDragStart={(e) => onDragStart(e, "items", index)}
-              style={{ cursor: "grab" }}
-            >
-              <CardMarmita
-                id={marmita.id}
-                name={marmita.name}
-                descricao={marmita.descricao}
-                img={marmita.img}
-                isHidden={false}
-                onToggleFavoritar={toggleFavoritar}
-                isFavorited={favoritedIds.includes(marmita.id)}
-              />
-            </div>
+          {marmitas.map((marmita) => (
+            <CardMarmita
+              key={marmita.id} // usando id como chave
+              id={marmita.id}
+              name={marmita.nameMarmita} // Ajustado para refletir o nome correto
+              dataCriacao={marmita.dataCriacao || "Descrição não disponível"} // Ajuste conforme a estrutura real dos dados
+              tamanhoMarmita={marmita.tamanhoMarmita}
+              img={marmita.img || "default-image-url"} // Substitua com a URL padrão ou remova se não for aplicável
+              isHidden={false} // Se necessário, ajuste a lógica para determinar se deve ser oculto
+              onToggleFavoritar={() => toggleFavoritar(marmita.id)}
+              isFavorited={favoritedIds.includes(marmita.id)}
+            />
           ))}
         </div>
       </main>
@@ -186,7 +187,7 @@ const Home = () => {
           <h4>Marmitas em estoque</h4>
 
           <div className="estoque">
-            <EstoqueContador/>
+            <EstoqueContador />
           </div>
         </div>
       </section>
